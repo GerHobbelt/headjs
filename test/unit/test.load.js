@@ -5,13 +5,13 @@ module('Load');
 // So now for a big ass helper so we can load some libs more than once ..anyways !
 var libs = (function(window, undefined) {
     var counter = {};
-    
+
     function count(item) {
         if (counter[item] === undefined) {
-          counter[item] = 0;  
+          counter[item] = 0;
         }
-        
-        return counter[item]++;  
+
+        return counter[item]++;
     }
 
     function mootools() {
@@ -47,12 +47,12 @@ var libs = (function(window, undefined) {
         // depends on jQuery
         window.Sly = undefined;
         return 'http://darsa.in/sly/js/sly.min.js?' + count("sly");
-    }    
+    }
     function underscore() {
         window._ = undefined;
         return 'http://underscorejs.org/underscore-min.js?' + count("underscore");
-    }    
-    
+    }
+
     // Exports
     return {
         mootools  : mootools,
@@ -69,18 +69,18 @@ var libs = (function(window, undefined) {
 
 asyncTest("load(jsFilePath, jsFilePath, callback)", function() {
     expect(2);
-    
+
     head.js(
         libs.mootools(),
         libs.jquery(),
-        
 
-        function() {                        
+
+        function() {
             $j = jQuery.noConflict();
-                        
+
             ok(!!$j("#qunit-header").addClass, "Loaded: jQuery");
             ok(!!$$("#qunit-header").addClass, "Loaded: Mootools");
-            
+
             start();
         }
     );
@@ -88,14 +88,14 @@ asyncTest("load(jsFilePath, jsFilePath, callback)", function() {
 
 asyncTest("ready(jsFileName).load(jsFilePath)", function () {
     expect(1);
-    
-    head.ready("jquery.min.js", function() {        
+
+    head.ready("jquery.min.js", function() {
         ok(!!jQuery, "Ready: jquery.min.js");
-        
+
         start();
     })
-        
-    .load(libs.jquery());    
+
+    .load(libs.jquery());
 });
 
 
@@ -108,20 +108,20 @@ asyncTest("load({ label: jsFilePath }, { label: jsFilePath }, callback).ready(la
         { knockout: libs.knockout() }
     )
 
-    .ready("jshint", function () {               
+    .ready("jshint", function () {
         ok(!!JSHINT, "Ready: jshint");
         assert.step(1, "Step 1: jshint");
     })
-    
+
     .ready("jquery", function () {
         ok(!!jQuery, "Ready: jquery");
         assert.step(2, "Step 2: jquery");
     })
-    
+
     .ready("knockout", function () {
         ok(!!ko, "Ready: knockout");
         assert.step(3, "Step 3: knockout");
-        
+
         start();
-    });       
+    });
 });

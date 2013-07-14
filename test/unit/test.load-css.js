@@ -9,7 +9,7 @@ function getStyle(ele, styleProp) {
     else if (window.getComputedStyle) {
         y = document.defaultView.getComputedStyle(ele, null).getPropertyValue(styleProp);
     }
-    
+
     return y;
 }
 

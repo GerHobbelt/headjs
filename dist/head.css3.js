@@ -1,5 +1,5 @@
 ﻿/*!
- * HeadJS     The only script in your <HEAD>    
+ * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
  * License    MIT / http://bit.ly/mit-license
@@ -19,7 +19,7 @@
         html  = doc.documentElement,
         klass = [],
         conf  = {
-            screens   : [240, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1680, 1920],            
+            screens   : [240, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1680, 1920],
             screensCss: { "gt": true, "gte": false, "lt": true, "lte": false, "eq": false },
             browsers  : [
                           { ie     : { min: 6, max: 10 } }
@@ -97,7 +97,7 @@
     var ua     = nav.userAgent.toLowerCase(),
         mobile = /mobile|android|kindle|silk|midp|(windows nt 6\.2.+arm|touch)/.test(ua);
 
-    // useful for enabling/disabling feature (we can consider a desktop navigator to have more cpu/gpu power)        
+    // useful for enabling/disabling feature (we can consider a desktop navigator to have more cpu/gpu power)
     api.feature("mobile" , mobile , true);
     api.feature("desktop", !mobile, true);
 
@@ -111,8 +111,8 @@
 
 
     var browser = ua[1],
-        version = parseFloat(ua[2]);    
-    
+        version = parseFloat(ua[2]);
+
     switch (browser) {
         case 'msie':
             browser = 'ie';
@@ -142,7 +142,7 @@
     api.browser[browser] = true;
 
     for (var i = 0, l = conf.browsers.length; i < l; i++) {
-        for (var key in conf.browsers[i]) {            
+        for (var key in conf.browsers[i]) {
             if (browser === key) {
                 pushClass(key);
 
@@ -157,11 +157,11 @@
                         if (conf.browserCss.gte)
                             pushClass("gte-" + key + v);
                     }
-                    
+
                     else if (version < v) {
                         if (conf.browserCss.lt)
                             pushClass("lt-" + key + v);
-                        
+
                         if (conf.browserCss.lte)
                             pushClass("lte-" + key + v);
                     }
@@ -169,7 +169,7 @@
                     else if (version === v) {
                         if (conf.browserCss.lte)
                             pushClass("lte-" + key + v);
-                        
+
                         if (conf.browserCss.eq)
                             pushClass("eq-" + key + v);
 
@@ -183,7 +183,7 @@
             }
         }
     }
-    
+
     pushClass(browser);
     pushClass(browser + parseInt(version, 10));
 
@@ -232,10 +232,10 @@
         // Viewport width
         var iw = win.innerWidth || html.clientWidth,
             ow = win.outerWidth || win.screen.width;
-        
+
         api.screen.innerWidth = iw;
         api.screen.outerWidth = ow;
-        
+
         // for debugging purposes, not really useful for anything else
         pushClass("w-" + iw);
 
@@ -243,7 +243,7 @@
             if (iw > width) {
                 if (conf.screensCss.gt)
                     pushClass("gt-" + width);
-                
+
                 if (conf.screensCss.gte)
                     pushClass("gte-" + width);
             }
@@ -251,7 +251,7 @@
             else if (iw < width) {
                 if (conf.screensCss.lt)
                     pushClass("lt-" + width);
-                
+
                 if (conf.screensCss.lte)
                     pushClass("lte-" + width);
             }
@@ -267,14 +267,14 @@
                     pushClass("gte-" + width);
             }
         });
-        
+
         // Viewport height
         var ih = win.innerHeight || html.clientHeight,
             oh = win.outerHeight || win.screen.height;
 
         api.screen.innerHeight = ih;
         api.screen.outerHeight = oh;
-             
+
         // no need for onChange event to detect this
         api.feature("portrait" , (ih > iw));
         api.feature("landscape", (ih < iw));
@@ -299,7 +299,7 @@
 })(window);
 
 /*!
- * HeadJS     The only script in your <HEAD>    
+ * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
  * License    MIT / http://bit.ly/mit-license
@@ -408,7 +408,7 @@
         },
         retina: function () {
             return (win.devicePixelRatio > 1);
-        },        
+        },
 
         /*
             font-face support. Uses browser sniffing but is synchronous.

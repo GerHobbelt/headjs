@@ -8,20 +8,20 @@
 
     <meta name="description" content="Load scripts and css on demand. Achieve responsive design with CSS that targets different screen resolutions, paths, states and browsers. Detect various browsers and their features. Target HTML5 and CSS3 safely." />
     <meta name="author" content="Tero Piirainen">
-    
+
     <!-- include the stylesheet after headjs -->
     <link rel="stylesheet" type="text/css" href="media/css/html5.min.css" />
     <link rel="stylesheet" href="media/css/style.min.css?v=0.3">
     <link rel="icon" type="image/gif" href="media/img/favicon.gif?v=1">
-    
+
     <script>
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-20001309-1']);
         _gaq.push(['_trackPageview']);
-        
+
         _gaq.push(['b._setAccount', 'UA-15567888-4']);
         _gaq.push(['b._trackPageview']);
-        
+
         function trackPageView(page) {
             _gaq.push(['_trackPageview'  , page]);
             _gaq.push(['b._trackPageview', page]);
@@ -53,10 +53,10 @@
             </p>
         </div>
         <div id="content" class="clear">
-            
+
             <h1>Highlights</h1>
             <section id="highlights">
-                
+
                 <article>
                     <h2>JavaScript Loader</h2>
                     <p>
@@ -75,7 +75,7 @@
                         page will be faster. Even with a single combined file.
                     </p>
                 </article>
-                
+
 
                 <article>
                     <h2>JavaScript Organizer</h2>
@@ -91,8 +91,8 @@
                         </figure>
                     </p>
                 </article>
-                
-                
+
+
                 <article>
                     <h2>Responsive Design / Media Queries</h2>
                     <p>
@@ -132,13 +132,13 @@
                         If you resize the browser your <span class="caps">CSS</span> rules will dynamically follow. Head
                         <span class="caps">JS</span> does this behind the&nbsp;scenes.
                     </p>
-                    
+
                     <h3>Look at it like Media Queries, except that it works in browsers that don't even support Media Queries.</h3>
                     <p>
                         <em>Head JS provides you with the following detections: <strong>.lt, .gt, .lte, .gte, .eq, .landscape, .portrait, .desktop, .mobile</strong></em>
                     </p>
                 </article>
-                
+
                 <article>
                     <h2><span class="caps">CSS</span> Router</h2>
                     <p>
@@ -152,8 +152,8 @@
                         </figure>
                     </p>
                 </article>
-                
-                
+
+
                 <article>
                     <h2>Browser Detection / Graceful Degradation</h2>
                     <p>
@@ -168,8 +168,8 @@
                     </p>
                     <p>It&#8217;s generally wiser to use feature detection <span class="caps">IE</span> is a feature in itself.</p>
                 </article>
-                
-                
+
+
                 <article>
                     <h2>Dynamic <span class="caps">CSS</span></h2>
                     <p>
@@ -184,7 +184,7 @@
                     </p>
                     <p>Whenever you call <code>head.feature()</code> your <span class="caps">CSS</span> rules will follow.</p>
                 </article>
-                
+
                 <article>
                     <h2>CSS3 Feature Detection</h2>
                     <p>
@@ -202,7 +202,7 @@
                         a must. It&#8217;s your <span class="caps">HEAD</span> again.
                     </p>
                 </article>
-                
+
                 <article>
                     <h2>JavaScript Feature Detection</h2>
                     <p>
@@ -216,7 +216,7 @@
                         </figure>
                     </p>
                 </article>
-                
+
                 <article>
                     <h2><span class="caps">HTML5</span> Enabler</h2>
                     <p>
@@ -231,7 +231,7 @@
                     </p>
                 </article>
             </section>
-            
+
             <h1>Theory</h1>
             <section id="theory">
                 <h2>Script Loader</h2>
@@ -357,7 +357,7 @@
                 </p>
                 <p><em>Note: As crazy as it sounds <span class="caps">FUBC</span> and <span class="caps">FOUC</span> are not my acronyms.</em></p>
             </section>
-            
+
             <h1>Usage</h1>
             <section id="usage">
                 <h2>Script loading and execution</h2>
@@ -418,7 +418,7 @@
                     Firefox and Opera because they execute files on the order they are
                     programmatically inserted on the page.
                 </p>
-                
+
                 <article>
                     <h2>Script Organization</h2>
                     <p>
@@ -454,7 +454,7 @@
                         </figure>
                     </p>
                 </article>
-                
+
                 <article>
                     <h2>Labeling Scripts</h2>
                     <p>
@@ -472,8 +472,8 @@
                         On the jQuery library above this would be just &#8220;jquery.min.js&#8221;.
                     </p>
                 </article>
-                
-                
+
+
                 <article>
                     <h2>Responsive Design / Media Queries</h2>
                     <p>
@@ -512,7 +512,7 @@
                         </figure>
                     </p>
                     <p>If you resize the browser window your <span class="caps">CSS</span> rules will be dynamically applied.</p>
-                    
+
                     <h3>
                         <strong>You can also specify what type of detections you want to use:</strong>
                     </h3>
@@ -534,7 +534,7 @@
                         </figure>
                     </p>
                 </article>
-                
+
                 <article>
                     <h2><span class="caps">CSS</span> Routing <a name="routing"></a></h2>
                     <p>
@@ -575,8 +575,8 @@
                             <figcaption><span class="caps">CSS</span></figcaption>
                         </figure>
                     </p>
-                </article> 
-                
+                </article>
+
                 <article>
                     <h2>CSS3 Feature Detection</h2>
                     <p>
@@ -595,8 +595,8 @@
                         On everyday <span class="caps">CSS</span> work you assume that a feature exists and code your <span class="caps">CSS</span>
                         accordingly and you later add support for older browsers with the aid of &#8220;no-&#8220; classes.
                     </p>
-                    
-                    
+
+
                     <h3><span class="caps">CSS3</span> property list</h3>
                     <p>Natively detected <span class="caps">CSS3</span> properties</p>
                     <ul>
@@ -627,7 +627,7 @@
                         is an excellent source of tests.
                     </p>
                 </article>
-                
+
                 <article>
                     <h2>JavaScript Feature Detection <a name="global-var"></a></h2>
                     <p>
@@ -638,8 +638,8 @@
                         <img alt="Head JS global JavaScript variable" src="media/img/global-var.gif" />
                     </p>
                 </article>
-                
-                
+
+
                 <article>
                     <h2>Browser Detection <a name="browser"></a> / Graceful Degradation</h2>
                     <p>
@@ -675,8 +675,8 @@
                         comes to <span class="caps">IE</span>.
                     </p>
                 </article>
-                
-                
+
+
                 <article>
                     <h2><span class="caps">HTML5</span> Enabler</h2>
                     <p>
@@ -730,8 +730,8 @@
                     </p>
                 </article>
             </section>
-            
-            
+
+
             <h1>API</h1>
             <section id="api">
                 <h2>Method index</h2>
@@ -790,8 +790,8 @@
                     <li><code>page</code>: a suffix for <span class="caps">CSS</span> <span class="caps">ID</span> representing the current page. default: &#8221;-page&#8221;</li>
                 </ul>
             </section>
-            
-            
+
+
             <h1>Download</h1>
             <section id="download">
                 <h2>Version 0.99</h2>
@@ -816,14 +816,14 @@
                         <td colspan="2">Source Code</td>
                     </tr>
                 </table>
-                
+
                 <p>
                     <strong>* <a href="https://github.com/headjs/headjs/blob/master/changelog.txt">Release notes</a></strong>
                 </p>
                 <p>
                     <strong><em><a href="test/unit/index.html" target="_blank" onclick="trackPageView('test/unit')">Unit Tests / BrowserScope Results</a></em></strong>
                 </p>
-                
+
                 <h4>Spread the word</h4>
                 <p>
                     <script type="IN/Share"></script>

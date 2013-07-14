@@ -1,5 +1,5 @@
 /*!
- * HeadJS     The only script in your <HEAD>    
+ * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
  * License    MIT / http://bit.ly/mit-license
@@ -108,7 +108,7 @@
         },
         retina: function () {
             return (win.devicePixelRatio > 1);
-        },        
+        },
 
         /*
             font-face support. Uses browser sniffing but is synchronous.

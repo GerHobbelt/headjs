@@ -21,43 +21,43 @@ module.exports = function(grunt) {
                 console: false
             }
         },
-        files: [ 
-        	'Gruntfile.js', 			
-        	'src/core.js', 
-			'src/css3.js', 
-			'src/load.js'
- 		]
+        files: [
+            'Gruntfile.js',
+            'src/core.js',
+            'src/css3.js',
+            'src/load.js'
+        ]
     },
 
-	concat: {
-		'dist/head.core.js': [
-			'src/core.js'
-		],
-		'dist/head.load.js': [
-			'src/core.js', 
-			'src/load.js'
-		],
-		'dist/head.css3.js': [
-			'src/core.js', 
-			'src/css3.js'
-		],
-		'dist/head.js': [
-			'src/core.js', 
-			'src/css3.js', 
-			'src/load.js'
-		]
-	},
+    concat: {
+        'dist/head.core.js': [
+            'src/core.js'
+        ],
+        'dist/head.load.js': [
+            'src/core.js',
+            'src/load.js'
+        ],
+        'dist/head.css3.js': [
+            'src/core.js',
+            'src/css3.js'
+        ],
+        'dist/head.js': [
+            'src/core.js',
+            'src/css3.js',
+            'src/load.js'
+        ]
+    },
 
-	uglify: {
-		my_target: {
-			files: {
-				'dist/head.core.min.js': ['dist/head.core.js'],
-				'dist/head.css3.min.js': ['dist/head.css3.js'],
-				'dist/head.load.min.js': ['dist/head.load.js'],
-				'dist/head.min.js': ['dist/head.js']
-			}
-		}
-	},
+    uglify: {
+        my_target: {
+            files: {
+                'dist/head.core.min.js': ['dist/head.core.js'],
+                'dist/head.css3.min.js': ['dist/head.css3.js'],
+                'dist/head.load.min.js': ['dist/head.load.js'],
+                'dist/head.min.js': ['dist/head.js']
+            }
+        }
+    },
 
     qunit: {
       files: ['test/unit/index-travis.html']
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-qunit');
-  
+
   // A convenient task alias.
   grunt.registerTask('test', 'qunit');
   grunt.registerTask("default", ["jshint", "concat", "uglify"]);

@@ -1,5 +1,5 @@
 ﻿/*!
- * HeadJS     The only script in your <HEAD>    
+ * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
  * License    MIT / http://bit.ly/mit-license
@@ -19,7 +19,7 @@
         html  = doc.documentElement,
         klass = [],
         conf  = {
-            screens   : [240, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1680, 1920],            
+            screens   : [240, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1680, 1920],
             screensCss: { "gt": true, "gte": false, "lt": true, "lte": false, "eq": false },
             browsers  : [
                           { ie     : { min: 6, max: 10 } }
@@ -97,7 +97,7 @@
     var ua     = nav.userAgent.toLowerCase(),
         mobile = /mobile|android|kindle|silk|midp|(windows nt 6\.2.+arm|touch)/.test(ua);
 
-    // useful for enabling/disabling feature (we can consider a desktop navigator to have more cpu/gpu power)        
+    // useful for enabling/disabling feature (we can consider a desktop navigator to have more cpu/gpu power)
     api.feature("mobile" , mobile , true);
     api.feature("desktop", !mobile, true);
 
@@ -111,8 +111,8 @@
 
 
     var browser = ua[1],
-        version = parseFloat(ua[2]);    
-    
+        version = parseFloat(ua[2]);
+
     switch (browser) {
         case 'msie':
             browser = 'ie';
@@ -142,7 +142,7 @@
     api.browser[browser] = true;
 
     for (var i = 0, l = conf.browsers.length; i < l; i++) {
-        for (var key in conf.browsers[i]) {            
+        for (var key in conf.browsers[i]) {
             if (browser === key) {
                 pushClass(key);
 
@@ -157,11 +157,11 @@
                         if (conf.browserCss.gte)
                             pushClass("gte-" + key + v);
                     }
-                    
+
                     else if (version < v) {
                         if (conf.browserCss.lt)
                             pushClass("lt-" + key + v);
-                        
+
                         if (conf.browserCss.lte)
                             pushClass("lte-" + key + v);
                     }
@@ -169,7 +169,7 @@
                     else if (version === v) {
                         if (conf.browserCss.lte)
                             pushClass("lte-" + key + v);
-                        
+
                         if (conf.browserCss.eq)
                             pushClass("eq-" + key + v);
 
@@ -183,7 +183,7 @@
             }
         }
     }
-    
+
     pushClass(browser);
     pushClass(browser + parseInt(version, 10));
 
@@ -232,10 +232,10 @@
         // Viewport width
         var iw = win.innerWidth || html.clientWidth,
             ow = win.outerWidth || win.screen.width;
-        
+
         api.screen.innerWidth = iw;
         api.screen.outerWidth = ow;
-        
+
         // for debugging purposes, not really useful for anything else
         pushClass("w-" + iw);
 
@@ -243,7 +243,7 @@
             if (iw > width) {
                 if (conf.screensCss.gt)
                     pushClass("gt-" + width);
-                
+
                 if (conf.screensCss.gte)
                     pushClass("gte-" + width);
             }
@@ -251,7 +251,7 @@
             else if (iw < width) {
                 if (conf.screensCss.lt)
                     pushClass("lt-" + width);
-                
+
                 if (conf.screensCss.lte)
                     pushClass("lte-" + width);
             }
@@ -267,14 +267,14 @@
                     pushClass("gte-" + width);
             }
         });
-        
+
         // Viewport height
         var ih = win.innerHeight || html.clientHeight,
             oh = win.outerHeight || win.screen.height;
 
         api.screen.innerHeight = ih;
         api.screen.outerHeight = oh;
-             
+
         // no need for onChange event to detect this
         api.feature("portrait" , (ih > iw));
         api.feature("landscape", (ih < iw));
@@ -299,7 +299,7 @@
 })(window);
 
 /*!
- * HeadJS     The only script in your <HEAD>    
+ * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
  * License    MIT / http://bit.ly/mit-license
@@ -408,7 +408,7 @@
         },
         retina: function () {
             return (win.devicePixelRatio > 1);
-        },        
+        },
 
         /*
             font-face support. Uses browser sniffing but is synchronous.
@@ -457,7 +457,7 @@
 
 })(window);
 /*!
- * HeadJS     The only script in your <HEAD>    
+ * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
  * License    MIT / http://bit.ly/mit-license
@@ -494,7 +494,7 @@
             /// INFO: use cases
             ///    head.load("http://domain.com/file.js","http://domain.com/file.js", callBack)
             ///    head.load({ label1: "http://domain.com/file.js" }, { label2: "http://domain.com/file.js" }, callBack)
-            ///</summary> 
+            ///</summary>
             var args      = arguments,
                  callback = args[args.length - 1],
                  items    = {};
@@ -535,7 +535,7 @@
                 });
 
                 return api;
-            }            
+            }
 
             // multiple arguments
             if (!!next) {
@@ -553,7 +553,7 @@
                 // execute
                 load(getAsset(args[0]), isFunction(next) ? next : function () {
                     api.load.apply(null, rest);
-                });                
+                });
             }
             else {
                 // single item
@@ -566,12 +566,12 @@
 
     // INFO: for retro compatibility
     api.js = api.load;
-    
+
     api.test = function (test, success, failure, callback) {
         ///<summary>
         /// INFO: use cases:
         ///    head.test(condition, null       , "file.NOk" , callback);
-        ///    head.test(condition, "fileOk.js", null       , callback);        
+        ///    head.test(condition, "fileOk.js", null       , callback);
         ///    head.test(condition, "fileOk.js", "file.NOk" , callback);
         ///    head.test(condition, "fileOk.js", ["file.NOk", "file.NOk"], callback);
         ///    head.test({
@@ -579,14 +579,14 @@
         ///               success : [{ label1: "file1Ok.js"  }, { label2: "file2Ok.js" }],
         ///               failure : [{ label1: "file1NOk.js" }, { label2: "file2NOk.js" }],
         ///               callback: callback
-        ///    );  
+        ///    );
         ///    head.test({
         ///               test    : condition,
         ///               success : ["file1Ok.js" , "file2Ok.js"],
         ///               failure : ["file1NOk.js", "file2NOk.js"],
         ///               callback: callback
-        ///    );         
-        ///</summary>    
+        ///    );
+        ///</summary>
         var obj = (typeof test === 'object') ? test : {
             test: test,
             success: !!success ? isArray(success) ? success : [success] : false,
@@ -620,7 +620,7 @@
         ///    head.ready(callBack)
         ///    head.ready(document , callBack)
         ///    head.ready("file.js", callBack);
-        ///    head.ready("label"  , callBack);        
+        ///    head.ready("label"  , callBack);
         ///</summary>
 
         // DOM ready check: head.ready(document, function() { });
@@ -745,7 +745,7 @@
     function getAsset(item) {
         ///<summary>
         /// Assets are in the form of
-        /// { 
+        /// {
         ///     name : label,
         ///     url  : url,
         ///     state: state
@@ -788,7 +788,7 @@
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -836,7 +836,7 @@
         }
 
         asset.state = LOADING;
-        
+
         loadAsset(asset, function () {
             asset.state = LOADED;
             callback();
@@ -890,12 +890,12 @@
 
         function error(event) {
             event = event || win.event;
-            
+
             // need some more detailed error handling here
 
             // release event listeners
             ele.onload = ele.onreadystatechange = ele.onerror = null;
-                        
+
             // do callback
             callback();
         }
@@ -908,7 +908,7 @@
             // 2) event.type = readystatechange, s.readyState = loaded
 
             // IE 7/8 (1 event on reload)
-            // 1) event.type = readystatechange, s.readyState = complete 
+            // 1) event.type = readystatechange, s.readyState = complete
 
             // event.type === 'readystatechange' && /loaded|complete/.test(s.readyState)
 
@@ -918,8 +918,8 @@
             // 3) event.type = load            , s.readyState = loaded
 
             // IE 9 (2 events on reload)
-            // 1) event.type = readystatechange, s.readyState = complete 
-            // 2) event.type = load            , s.readyState = complete 
+            // 1) event.type = readystatechange, s.readyState = complete
+            // 2) event.type = load            , s.readyState = complete
 
             // event.type === 'load'             && /loaded|complete/.test(s.readyState)
             // event.type === 'readystatechange' && /loaded|complete/.test(s.readyState)
@@ -932,7 +932,7 @@
             // IE 10 (3 events on reload)
             // 1) event.type = readystatechange, s.readyState = loaded
             // 2) event.type = load            , s.readyState = complete
-            // 3) event.type = readystatechange, s.readyState = complete 
+            // 3) event.type = readystatechange, s.readyState = complete
 
             // event.type === 'load'             && /loaded|complete/.test(s.readyState)
             // event.type === 'readystatechange' && /complete/.test(s.readyState)
@@ -941,14 +941,14 @@
             // 1) event.type = load, s.readyState = undefined
 
             // Other Browsers (1 event on reload)
-            // 1) event.type = load, s.readyState = undefined            
+            // 1) event.type = load, s.readyState = undefined
 
             // event.type == 'load' && s.readyState = undefined
 
 
             // !doc.documentMode is for IE6/7, IE8+ have documentMode
             if (event.type === 'load' || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
-                // release event listeners               
+                // release event listeners
                 ele.onload = ele.onreadystatechange = ele.onerror = null;
 
                 // do callback
@@ -998,7 +998,7 @@
         // IE
         else if (doc.readyState === "complete") {
             // we're here because readyState === "complete" in oldIE
-            // which is good enough for us to call the dom ready!            
+            // which is good enough for us to call the dom ready!
             doc.detachEvent("onreadystatechange", domContentLoaded);
             domReady();
         }
@@ -1006,7 +1006,7 @@
 
     // Catch cases where ready() is called after the browser event has already occurred.
     // we once tried to use readyState "interactive" here, but it caused issues like the one
-    // discovered by ChrisS here: http://bugs.jquery.com/ticket/12282#comment:15    
+    // discovered by ChrisS here: http://bugs.jquery.com/ticket/12282#comment:15
     if (doc.readyState === "complete") {
         domReady();
     }

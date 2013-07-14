@@ -6,7 +6,7 @@
 
         <!-- QUnit -->
         <link rel="stylesheet" type="text/css" href="../../media/libs/qunit/qunit-1.11.0.css" />
-        
+
         <!-- HeadJS -->
         <script>
             // BrowserScope Results
@@ -24,7 +24,7 @@
     <body>
         <div id="qunit"></div>
         <div id="qunit-userAgent"></div>
-        
+
         <ul>
             <li>
                 <h4>
@@ -49,32 +49,32 @@
         <script type="text/javascript" src="../../media/libs/qunit/qunit-1.11.0.js"></script>
         <script type="text/javascript" src="../../media/libs/qunit/qunit-assert-step.js"></script>
         <script>QUnit.config.requireExpects = true;</script>
-        
+
         <!-- Tests -->
         <script src="test.responsive.js"></script>
         <script src="test.feature.js"></script>
         <script src="test.load.js"></script>
         <script src="test.load-css.js"></script>
-        
+
         <script>
             function sanitize(msg) {
                 msg = msg || "";
-                
+
                 return msg
                     .replace(/[^A-Z]/gi, "")
                     .toLocaleLowerCase();
             }
-            
+
             // Build browserscope results
             QUnit.log(function (details) {
                 var key   = sanitize(details.message);
                 var value = details.result ? 1 : 0;
-                
+
                 if (!!key) {
                     _bTestResults[key] = value;
                 }
             });
-            
+
             // Send browserscope results
             QUnit.done(function (details) {
                 head.load("http://www.browserscope.org/user/beacon/" + "agt1YS1wcm9maWxlcnINCxIEVGVzdBjn5PUSDA");
