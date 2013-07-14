@@ -1,3 +1,11 @@
+# Editor backup files
+*~
+*.bak
+
+# MSOffice temporary files
+~*
+
+# misc. files
 _site*/
 .idea*/
 _ReSharper.headjs*/
