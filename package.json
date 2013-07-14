@@ -1,0 +1,37 @@
+{
+  "name": "head.js",
+  "version": "0.9.9",
+  "description": "The only script in your HEAD.",
+  "homepage": "http://headjs.com",
+  "subdomain": "headjs",
+  "scripts": {
+    "test": "grunt jshint",
+    "start": ""
+  },
+  "author": {
+    "name": "HeadJS / Tero Piirainen / Robert Hoffmann",
+    "web": "http://www.i-technology.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/headjs/headjs.git"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": ">=0.6.0",
+    "grunt-contrib-cssmin": ">=0.6.1",
+    "grunt-contrib-uglify": ">=0.2.2",
+    "grunt": ">=0.4.1",
+    "grunt-cli": ">=0.1.9"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://bit.ly/mit-license"
+    }
+  ]
+}
