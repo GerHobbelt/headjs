@@ -403,33 +403,6 @@
     function loadAsset(asset, callback) {
         callback = callback || noop;
 
-        var ele;
-        if (/\.css[^\.]*$/.test(asset.url)) {
-            ele      = doc.createElement('link');
-            ele.type = 'text/' + (asset.type || 'css');
-            ele.rel  = 'stylesheet';
-            ele.href = asset.url;
-        }
-        else {
-            ele      = doc.createElement('script');
-            ele.type = 'text/' + (asset.type || 'javascript');
-            ele.src  = asset.url;
-        }
-
-        ele.onload  = ele.onreadystatechange = process;
-        ele.onerror = error;
-
-        /* Good read, but doesn't give much hope !
-         * http://blog.getify.com/on-script-loaders/
-         * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
-         * https://hacks.mozilla.org/2009/06/defer/
-         */
-
-        // ASYNC: load in parellel and execute as soon as possible
-        ele.async = false;
-        // DEFER: load in parallel but maintain execution order
-        ele.defer = false;
-
         function error(event) {
             event = event || win.event;
 
@@ -503,6 +476,33 @@
             //    error({ type: "timeout" });
             //}, 3000);
         }
+
+        var ele;
+        if (/\.css[^\.]*$/.test(asset.url)) {
+            ele      = doc.createElement('link');
+            ele.type = 'text/' + (asset.type || 'css');
+            ele.rel  = 'stylesheet';
+            ele.href = asset.url;
+        }
+        else {
+            ele      = doc.createElement('script');
+            ele.type = 'text/' + (asset.type || 'javascript');
+            ele.src  = asset.url;
+        }
+
+        ele.onload  = ele.onreadystatechange = process;
+        ele.onerror = error;
+
+        /* Good read, but doesn't give much hope !
+         * http://blog.getify.com/on-script-loaders/
+         * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
+         * https://hacks.mozilla.org/2009/06/defer/
+         */
+
+        // ASYNC: load in parellel and execute as soon as possible
+        ele.async = false;
+        // DEFER: load in parallel but maintain execution order
+        ele.defer = false;
 
         // use insertBefore to keep IE from throwing Operation Aborted (thx Bryan Forbes!)
         var head = doc.head || doc.getElementsByTagName('head')[0];
