@@ -7,31 +7,32 @@
  * Version 0.99
  * http://headjs.com
  */
-;(function(win, undefined) {
-    "use strict";
+;(function(win, undefined) {                                                                                                //REMOVE-ON-REQUIRE-BUILD
+    "use strict";                                                                                                           //REMOVE-ON-REQUIRE-BUILD
 
-    var doc = win.document,
-        /*
-            To add a new test:
+    var doc = win.document;                                                                                                 //REMOVE-ON-REQUIRE-BUILD
 
-            head.feature("video", function() {
-                var tag = document.createElement('video');
-                return !!tag.canPlayType;
-            });
+    /*
+        To add a new test:
 
-            Good place to grab more tests
+        head.feature("video", function() {
+            var tag = document.createElement('video');
+            return !!tag.canPlayType;
+        });
 
-            https://github.com/Modernizr/Modernizr/blob/master/modernizr.js
-        */
+        Good place to grab more tests
 
-        /* CSS modernizer */
-         el       = doc.createElement("i"),
-         style    = el.style,
-         prefs    = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-         domPrefs = 'Webkit Moz O ms Khtml'.split(' '),
+        https://github.com/Modernizr/Modernizr/blob/master/modernizr.js
+    */
 
-         headVar = win.head_conf && win.head_conf.head || "head",
-         api     = win[headVar];
+    /* CSS modernizer */
+    var el       = doc.createElement("i"),
+        style    = el.style,
+        prefs    = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
+        domPrefs = 'Webkit Moz O ms Khtml'.split(' ');
+
+    var headVar = win.head_conf && win.head_conf.head || "head",                                                            //REMOVE-ON-REQUIRE-BUILD
+        api     = win[headVar];                                                                                             //REMOVE-ON-REQUIRE-BUILD
 
      // Thanks Paul Irish!
     function testProps(props) {
@@ -155,4 +156,4 @@
     // enable features at once
     api.feature();
 
-})(window);
+})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD

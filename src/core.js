@@ -7,7 +7,7 @@
  * Version 0.99
  * http://headjs.com
  */
-; (function (win, undefined) {
+; (function (win, undefined) {                                                                                              //REMOVE-ON-REQUIRE-BUILD
     "use strict";
 
     // gt, gte, lt, lte, eq breakpoints would have been more simple to write as ['gt','gte','lt','lte','eq']
@@ -296,4 +296,4 @@
     } else {
         win.attachEvent("onresize", onResize);
     }
-})(window);
+})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD

@@ -48,7 +48,55 @@ module.exports = function(grunt) {
             'src/core.js',
             'src/css3.js',
             'src/load.js'
-        ]
+        ],
+        'dist/head-amd.js': {
+            options: {
+                // Remove all wrappers and init code in the files with a single AMD wrapper at the top and var decls in core.
+                process: function(src, filepath) {
+                  return '// Source: ' + filepath + '\n' +
+                    src.replace(/^.*REMOVE-ON-REQUIRE-BUILD.*$/g, '');
+                },
+                banner: "\n" +
+                        "(function ( window, factory ) {\n" +
+                        "\n" +
+                        "  if ( typeof module === \"object\" && typeof module.exports === \"object\" ) {\n" +
+                        "    // Expose a factory as module.exports in loaders that implement the Node\n" +
+                        "    // module pattern (including browserify).\n" +
+                        "    // This accentuates the need for a real window in the environment\n" +
+                        "    // e.g. var jQuery = require(\"jquery\")(window);\n" +
+                        "    module.exports = function( w ) {\n" +
+                        "      w = w || window;\n" +
+                        "      if ( !w.document ) {\n" +
+                        "        throw new Error(\"headJS requires a window with a document\");\n" +
+                        "      }\n" +
+                        "      return factory( w );\n" +
+                        "    };\n" +
+                        "  } else {\n" +
+                        "    if ( typeof define === \"function\" && define.amd ) {\n" +
+                        "      // AMD. Register as a named module.\n" +
+                        "      define( \"head\", [], function() {\n" +
+                        "        return factory(window);\n" +
+                        "      });\n" +
+                        "    } else {\n" +
+                        "        // Browser globals\n" +
+                        "        window.head = factory(window);\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "\n" +
+                        "// Pass this, window may not be defined yet\n" +
+                        "}(this, function ( win, undefined ) {\n" +
+                        "\n" +
+                        "\n",
+                footer: "}));\n"
+            },
+            files: {
+                'dist/head-amd.js': [
+                    'src/core.js',
+                    'src/css3.js',
+                    'src/load.js'
+                ]
+            }
+        }
     },
 
     uglify: {
@@ -72,6 +120,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-exec');
 
   // Default task
   grunt.registerTask("default", ["jshint", "concat", "uglify", "qunit"]);
