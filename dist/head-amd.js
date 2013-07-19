@@ -1,3 +1,37 @@
+
+(function ( window, factory ) {
+
+  if ( typeof module === "object" && typeof module.exports === "object" ) {
+    // Expose a factory as module.exports in loaders that implement the Node
+    // module pattern (including browserify).
+    // This accentuates the need for a real window in the environment
+    // e.g. var jQuery = require("jquery")(window);
+    module.exports = function( w ) {
+      w = w || window;
+      if ( !w.document ) {
+        throw new Error("headJS requires a window with a document");
+      }
+      return factory( w );
+    };
+  } else {
+    if ( typeof define === "function" && define.amd ) {
+      // AMD. Register as a named module.
+      define( "head", [], function() {
+        return factory(window);
+      });
+    } else {
+        // Browser globals
+        window.head = factory(window);
+    }
+  }
+
+// Pass this, window may not be defined yet
+}(this, function ( win, undefined ) {
+
+
+
+// Source: src/core.js
+
 /*!
  * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
@@ -7,7 +41,7 @@
  * Version 0.99
  * http://headjs.com
  */
-; (function (win, undefined) {                                                                                              //REMOVE-ON-REQUIRE-BUILD
+
     "use strict";
 
     // gt, gte, lt, lte, eq breakpoints would have been more simple to write as ['gt','gte','lt','lte','eq']
@@ -296,7 +330,10 @@
     } else {
         win.attachEvent("onresize", onResize);
     }
-})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+
+
+
+// Source: src/css3.js
 
 /*!
  * HeadJS     The only script in your <HEAD>
@@ -307,10 +344,10 @@
  * Version 0.99
  * http://headjs.com
  */
-;(function(win, undefined) {                                                                                                //REMOVE-ON-REQUIRE-BUILD
-    "use strict";                                                                                                           //REMOVE-ON-REQUIRE-BUILD
 
-    var doc = win.document;                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+
+
+
 
     /*
         To add a new test:
@@ -331,8 +368,8 @@
         prefs    = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
         domPrefs = 'Webkit Moz O ms Khtml'.split(' ');
 
-    var headVar = win.head_conf && win.head_conf.head || "head",                                                            //REMOVE-ON-REQUIRE-BUILD
-        api     = win[headVar];                                                                                             //REMOVE-ON-REQUIRE-BUILD
+
+
 
      // Thanks Paul Irish!
     function testProps(props) {
@@ -456,7 +493,10 @@
     // enable features at once
     api.feature();
 
-})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+
+
+// Source: src/load.js
+
 /*!
  * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
@@ -466,10 +506,10 @@
  * Version 0.99
  * http://headjs.com
  */
-; (function (win, undefined) {                                                                                              //REMOVE-ON-REQUIRE-BUILD
-    "use strict";                                                                                                           //REMOVE-ON-REQUIRE-BUILD
 
-    var doc = win.document;                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+
+
+
     var domWaiters = [],
         queue      = [], // waiters for the "head ready" event
         handlers   = {}, // user functions waiting for events
@@ -478,9 +518,9 @@
         isHeadReady,
         isDomReady;
 
-        /*** public API ***/                                                                                                //REMOVE-ON-REQUIRE-BUILD
-    var headVar = win.head_conf && win.head_conf.head || "head",                                                            //REMOVE-ON-REQUIRE-BUILD
-        api     = win[headVar] = (win[headVar] || function () { api.ready.apply(null, arguments); });                       //REMOVE-ON-REQUIRE-BUILD
+
+
+
 
         // states
     var PRELOADING = 1,
@@ -1071,4 +1111,7 @@
 
     }, 300);
 
-})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+
+  return api;
+}));
+

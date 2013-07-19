@@ -7,7 +7,7 @@
  * Version 0.99
  * http://headjs.com
  */
-; (function (win, undefined) {
+; (function (win, undefined) {                                                                                              //REMOVE-ON-REQUIRE-BUILD
     "use strict";
 
     // gt, gte, lt, lte, eq breakpoints would have been more simple to write as ['gt','gte','lt','lte','eq']
@@ -296,7 +296,7 @@
     } else {
         win.attachEvent("onresize", onResize);
     }
-})(window);
+})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD
 
 /*!
  * HeadJS     The only script in your <HEAD>
@@ -307,24 +307,24 @@
  * Version 0.99
  * http://headjs.com
  */
-; (function (win, undefined) {
-    "use strict";
+; (function (win, undefined) {                                                                                              //REMOVE-ON-REQUIRE-BUILD
+    "use strict";                                                                                                           //REMOVE-ON-REQUIRE-BUILD
 
-    var doc = win.document,
-        domWaiters = [],
+    var doc = win.document;                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+    var domWaiters = [],
         queue      = [], // waiters for the "head ready" event
         handlers   = {}, // user functions waiting for events
         assets     = {}, // loadable items in various states
         isAsync    = "async" in doc.createElement("script") || "MozAppearance" in doc.documentElement.style || win.opera,
         isHeadReady,
-        isDomReady,
+        isDomReady;
 
-        /*** public API ***/
-        headVar = win.head_conf && win.head_conf.head || "head",
-        api     = win[headVar] = (win[headVar] || function () { api.ready.apply(null, arguments); }),
+        /*** public API ***/                                                                                                //REMOVE-ON-REQUIRE-BUILD
+    var headVar = win.head_conf && win.head_conf.head || "head",                                                            //REMOVE-ON-REQUIRE-BUILD
+        api     = win[headVar] = (win[headVar] || function () { api.ready.apply(null, arguments); });                       //REMOVE-ON-REQUIRE-BUILD
 
         // states
-        PRELOADING = 1,
+    var PRELOADING = 1,
         PRELOADED  = 2,
         LOADING    = 3,
         LOADED     = 4;
@@ -912,4 +912,4 @@
 
     }, 300);
 
-})(window);
+})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD

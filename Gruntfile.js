@@ -53,8 +53,8 @@ module.exports = function(grunt) {
             options: {
                 // Remove all wrappers and init code in the files with a single AMD wrapper at the top and var decls in core.
                 process: function(src, filepath) {
-                  return '// Source: ' + filepath + '\n' +
-                    src.replace(/^.*REMOVE-ON-REQUIRE-BUILD.*$/g, '');
+                  return "\n// Source: " + filepath + "\n\n" +
+                    src.replace(/(^|\n).*REMOVE-ON-REQUIRE-BUILD/g, "\n");
                 },
                 banner: "\n" +
                         "(function ( window, factory ) {\n" +
@@ -87,7 +87,9 @@ module.exports = function(grunt) {
                         "}(this, function ( win, undefined ) {\n" +
                         "\n" +
                         "\n",
-                footer: "}));\n"
+                footer: "\n" +
+                        "  return api;\n" +
+                        "}));\n\n"
             },
             files: {
                 'dist/head-amd.js': [
@@ -120,7 +122,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-exec');
 
   // Default task
   grunt.registerTask("default", ["jshint", "concat", "uglify", "qunit"]);
