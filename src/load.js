@@ -230,21 +230,21 @@
         // does nothing
     }
 
-    function each(arr, callback) {
-        if (!arr) {
-            return;
-        }
-
-        // arguments special type
-        if (typeof arr === 'object') {
-            arr = [].slice.call(arr);
-        }
-
-        // do the job
-        for (var i = 0, l = arr.length; i < l; i++) {
-            callback.call(arr, arr[i], i);
-        }
-    }
+    function each(arr, callback) {                                                                                  //REMOVE-ON-REQUIRE-BUILD
+        if (!arr) {                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+            return;                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+        }                                                                                                           //REMOVE-ON-REQUIRE-BUILD
+                                                                                                                    //REMOVE-ON-REQUIRE-BUILD
+        // arguments special type                                                                                   //REMOVE-ON-REQUIRE-BUILD
+        if (typeof arr === 'object') {                                                                              //REMOVE-ON-REQUIRE-BUILD
+            arr = [].slice.call(arr);                                                                               //REMOVE-ON-REQUIRE-BUILD
+        }                                                                                                           //REMOVE-ON-REQUIRE-BUILD
+                                                                                                                    //REMOVE-ON-REQUIRE-BUILD
+        // do the job                                                                                               //REMOVE-ON-REQUIRE-BUILD
+        for (var i = 0, l = arr.length; i < l; i++) {                                                               //REMOVE-ON-REQUIRE-BUILD
+            callback.call(arr, arr[i], i);                                                                          //REMOVE-ON-REQUIRE-BUILD
+        }                                                                                                           //REMOVE-ON-REQUIRE-BUILD
+    }                                                                                                               //REMOVE-ON-REQUIRE-BUILD
 
     /* A must read: http://bonsaiden.github.com/JavaScript-Garden
      ************************************************************/
