@@ -88,6 +88,16 @@
     }
 
     function each(arr, fn) {
+        if (!arr) {
+            return;
+        }
+
+        // arguments special type
+        if (typeof arr === 'object') {
+            arr = [].slice.call(arr);
+        }
+
+        // do the job
         for (var i = 0, l = arr.length; i < l; i++) {
             fn.call(arr, arr[i], i);
         }
@@ -729,21 +739,21 @@
         // does nothing
     }
 
-    function each(arr, callback) {
-        if (!arr) {
-            return;
-        }
 
-        // arguments special type
-        if (typeof arr === 'object') {
-            arr = [].slice.call(arr);
-        }
 
-        // do the job
-        for (var i = 0, l = arr.length; i < l; i++) {
-            callback.call(arr, arr[i], i);
-        }
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /* A must read: http://bonsaiden.github.com/JavaScript-Garden
      ************************************************************/
