@@ -20,7 +20,7 @@
         html  = doc.documentElement,
         klass = [],
         conf  = {
-            screens   : [240, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1680, 1920],            
+            screens   : [240, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1680, 1920],
             screensCss: { "gt": true, "gte": false, "lt": true, "lte": false, "eq": false },
             browsers  : [
                           { ie     : { min: 6, max: 11 } }
@@ -51,7 +51,7 @@
 
     function removeClass(name) {
         var re = new RegExp(" \\b" + name + "\\b");
-        html.className = html.className.replace(re, '');
+        html.className = html.className.replace(re, "");
     }
 
     function each(arr, fn) {
@@ -69,21 +69,21 @@
 
         // internal: apply all classes
         if (!key) {
-            html.className += ' ' + klass.join(' ');
+            html.className += " " + klass.join(" ");
             klass = [];
             return api;
         }
 
-        if (Object.prototype.toString.call(enabled) === '[object Function]') {
+        if (Object.prototype.toString.call(enabled) === "[object Function]") {
             enabled = enabled.call();
         }
 
-        pushClass((enabled ? '' : 'no-') + key);
+        pushClass((enabled ? "" : "no-") + key);
         api[key] = !!enabled;
 
         // apply class to HTML element
         if (!queue) {
-            removeClass('no-' + key);
+            removeClass("no-" + key);
             removeClass(key);
             api.feature();
         }
@@ -112,26 +112,26 @@
 
 
     var browser = ua[1],
-        version = parseFloat(ua[2]);    
+        version = parseFloat(ua[2]);
     
     switch (browser) {
-        case 'msie':
-            browser = 'ie';
+        case "msie":
+            browser = "ie";
             version = doc.documentMode || version;
             break;
 
-        case 'firefox':
-            browser = 'ff';
+        case "firefox":
+            browser = "ff";
             break;
 
-        case 'ipod':
-        case 'ipad':
-        case 'iphone':
-            browser = 'ios';
+        case "ipod":
+        case "ipad":
+        case "iphone":
+            browser = "ios";
             break;
 
-        case 'webkit':
-            browser = 'safari';
+        case "webkit":
+            browser = "safari";
             break;
     }
 
@@ -143,7 +143,7 @@
     api.browser[browser] = true;
 
     for (var i = 0, l = conf.browsers.length; i < l; i++) {
-        for (var key in conf.browsers[i]) {            
+        for (var key in conf.browsers[i]) {
             if (browser === key) {
                 pushClass(key);
 
@@ -180,7 +180,7 @@
                 }
             }
             else {
-                pushClass('no-' + key);
+                pushClass("no-" + key);
             }
         }
     }
@@ -329,8 +329,8 @@
         /* CSS modernizer */
          el       = doc.createElement("i"),
          style    = el.style,
-         prefs    = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-         domPrefs = 'Webkit Moz O ms Khtml'.split(' '),
+         prefs    = " -o- -moz- -ms- -webkit- -khtml- ".split(" "),
+         domPrefs = "Webkit Moz O ms Khtml".split(" "),
 
          headVar = win.head_conf && win.head_conf.head || "head",
          api     = win[headVar];
@@ -349,16 +349,16 @@
 
     function testAll(prop) {
         var camel = prop.charAt(0).toUpperCase() + prop.substr(1),
-            props = (prop + ' ' + domPrefs.join(camel + ' ') + camel).split(' ');
+            props = (prop + " " + domPrefs.join(camel + " ") + camel).split(" ");
 
         return !!testProps(props);
     }
 
     var tests = {
         gradient: function() {
-            var s1 = 'background-image:',
-                s2 = 'gradient(linear,left top,right bottom,from(#9f9),to(#fff));',
-                s3 = 'linear-gradient(left top,#eee,#fff);';
+            var s1 = "background-image:",
+                s2 = "gradient(linear,left top,right bottom,from(#9f9),to(#fff));",
+                s3 = "linear-gradient(left top,#eee,#fff);";
 
             style.cssText = (s1 + prefs.join(s2 + s1) + prefs.join(s3 + s1)).slice(0,-s1.length);
             return !!style.backgroundImage;
@@ -374,17 +374,17 @@
         },
 
         textshadow: function() {
-            return style.textShadow === '';
+            return style.textShadow === "";
         },
 
         multiplebgs: function() {
-            style.cssText = 'background:url(https://),url(https://),red url(https://)';
+            style.cssText = "background:url(https://),url(https://),red url(https://)";
 
             // If the UA supports multiple backgrounds, there should be three occurrences
             // of the string "url(" in the return value for elemStyle.background
             var result = (style.background || "").match(/url/g);
 
-            return Object.prototype.toString.call(result) === '[object Array]' && result.length === 3;
+            return Object.prototype.toString.call(result) === "[object Array]" && result.length === 3;
         },
 
         boxshadow: function() {
@@ -411,11 +411,11 @@
             return testAll("transition");
         },
         touch: function () {
-            return 'ontouchstart' in win;
+            return "ontouchstart" in win;
         },
         retina: function () {
             return (win.devicePixelRatio > 1);
-        },        
+        },
 
         /*
             font-face support. Uses browser sniffing but is synchronous.
@@ -543,7 +543,7 @@
                 });
 
                 return api;
-            }            
+            }
 
             // multiple arguments
             if (!!next) {
@@ -561,7 +561,7 @@
                 // execute
                 load(getAsset(args[0]), isFunction(next) ? next : function () {
                     api.load.apply(null, rest);
-                });                
+                });
             }
             else {
                 // single item
@@ -595,7 +595,7 @@
         ///               callback: callback
         ///    );         
         ///</summary>    
-        var obj = (typeof test === 'object') ? test : {
+        var obj = (typeof test === "object") ? test : {
             test: test,
             success: !!success ? isArray(success) ? success : [success] : false,
             failure: !!failure ? isArray(failure) ? failure : [failure] : false,
@@ -650,7 +650,7 @@
         }
 
         // make sure arguments are sane
-        if (typeof key !== 'string' || !isFunction(callback)) {
+        if (typeof key !== "string" || !isFunction(callback)) {
             return api;
         }
 
@@ -658,7 +658,7 @@
         var asset = assets[key];
 
         // item already loaded --> execute and return
-        if (asset && asset.state === LOADED || key === 'ALL' && allLoaded() && isDomReady) {
+        if (asset && asset.state === LOADED || key === "ALL" && allLoaded() && isDomReady) {
             one(callback);
             return api;
         }
@@ -702,7 +702,7 @@
         }
 
         // arguments special type
-        if (typeof arr === 'object') {
+        if (typeof arr === "object") {
             arr = [].slice.call(arr);
         }
 
@@ -761,7 +761,7 @@
         ///</summary>
         var asset = {};
 
-        if (typeof item === 'object') {
+        if (typeof item === "object") {
             for (var label in item) {
                 if (!!item[label]) {
                     asset = {
@@ -814,7 +814,7 @@
             asset.state     = PRELOADING;
             asset.onpreload = [];
 
-            loadAsset({ url: asset.url, type: 'cache' }, function () {
+            loadAsset({ url: asset.url, type: "cache" }, function () {
                 onPreload(asset);
             });
         }
@@ -867,46 +867,19 @@
     ******************************************************/
     function loadAsset(asset, callback) {
         callback = callback || noop;
-
-        var ele;
-        if (/\.css[^\.]*$/.test(asset.url)) {
-            ele      = doc.createElement('link');
-            ele.type = 'text/' + (asset.type || 'css');
-            ele.rel  = 'stylesheet';
-            ele.href = asset.url;
-        }
-        else {
-            ele      = doc.createElement('script');
-            ele.type = 'text/' + (asset.type || 'javascript');
-            ele.src  = asset.url;
-        }
-
-        ele.onload  = ele.onreadystatechange = process;
-        ele.onerror = error;
-
-        /* Good read, but doesn't give much hope !
-         * http://blog.getify.com/on-script-loaders/
-         * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
-         * https://hacks.mozilla.org/2009/06/defer/
-         */
-
-        // ASYNC: load in parellel and execute as soon as possible
-        ele.async = false;
-        // DEFER: load in parallel but maintain execution order
-        ele.defer = false;
-
+        
         function error(event) {
             event = event || win.event;
-            
+
             // need some more detailed error handling here
 
             // release event listeners
             ele.onload = ele.onreadystatechange = ele.onerror = null;
-                        
+
             // do callback
             callback();
         }
-
+        
         function process(event) {
             event = event || win.event;
 
@@ -954,7 +927,7 @@
 
 
             // !doc.documentMode is for IE6/7, IE8+ have documentMode
-            if (event.type === 'load' || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
+            if (event.type === "load" || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
                 // release event listeners               
                 ele.onload = ele.onreadystatechange = ele.onerror = null;
 
@@ -969,8 +942,39 @@
             //}, 3000);
         }
 
+        var ele;
+        if (/\.css[^\.]*$/.test(asset.url)) {
+            ele      = doc.createElement("link");
+            ele.type = "text/" + (asset.type || "css");
+            ele.rel  = "stylesheet";
+            ele.href = asset.url;
+        }
+        else {
+            ele      = doc.createElement("script");
+            ele.type = "text/" + (asset.type || "javascript");
+            ele.src  = asset.url;
+        }
+
+        ele.onload  = ele.onreadystatechange = process;
+        ele.onerror = error;
+
+        /* Good read, but doesn't give much hope !
+         * http://blog.getify.com/on-script-loaders/
+         * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
+         * https://hacks.mozilla.org/2009/06/defer/
+         */
+
+        // ASYNC: load in parellel and execute as soon as possible
+        ele.async = false;
+        // DEFER: load in parallel but maintain execution order
+        ele.defer = false;
+
+
+
+
+
         // use insertBefore to keep IE from throwing Operation Aborted (thx Bryan Forbes!)
-        var head = doc.head || doc.getElementsByTagName('head')[0];
+        var head = doc.head || doc.getElementsByTagName("head")[0];
         // but insert at end of head, because otherwise if it is a stylesheet, it will not ovverride values
         head.insertBefore(ele, head.lastChild);
     }

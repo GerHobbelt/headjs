@@ -78,7 +78,7 @@
                 });
 
                 return api;
-            }            
+            }
 
             // multiple arguments
             if (!!next) {
@@ -96,7 +96,7 @@
                 // execute
                 load(getAsset(args[0]), isFunction(next) ? next : function () {
                     api.load.apply(null, rest);
-                });                
+                });
             }
             else {
                 // single item
@@ -130,7 +130,7 @@
         ///               callback: callback
         ///    );         
         ///</summary>    
-        var obj = (typeof test === 'object') ? test : {
+        var obj = (typeof test === "object") ? test : {
             test: test,
             success: !!success ? isArray(success) ? success : [success] : false,
             failure: !!failure ? isArray(failure) ? failure : [failure] : false,
@@ -185,7 +185,7 @@
         }
 
         // make sure arguments are sane
-        if (typeof key !== 'string' || !isFunction(callback)) {
+        if (typeof key !== "string" || !isFunction(callback)) {
             return api;
         }
 
@@ -193,7 +193,7 @@
         var asset = assets[key];
 
         // item already loaded --> execute and return
-        if (asset && asset.state === LOADED || key === 'ALL' && allLoaded() && isDomReady) {
+        if (asset && asset.state === LOADED || key === "ALL" && allLoaded() && isDomReady) {
             one(callback);
             return api;
         }
@@ -237,7 +237,7 @@
         }
 
         // arguments special type
-        if (typeof arr === 'object') {
+        if (typeof arr === "object") {
             arr = [].slice.call(arr);
         }
 
@@ -296,7 +296,7 @@
         ///</summary>
         var asset = {};
 
-        if (typeof item === 'object') {
+        if (typeof item === "object") {
             for (var label in item) {
                 if (!!item[label]) {
                     asset = {
@@ -349,7 +349,7 @@
             asset.state     = PRELOADING;
             asset.onpreload = [];
 
-            loadAsset({ url: asset.url, type: 'cache' }, function () {
+            loadAsset({ url: asset.url, type: "cache" }, function () {
                 onPreload(asset);
             });
         }
@@ -402,46 +402,19 @@
     ******************************************************/
     function loadAsset(asset, callback) {
         callback = callback || noop;
-
-        var ele;
-        if (/\.css[^\.]*$/.test(asset.url)) {
-            ele      = doc.createElement('link');
-            ele.type = 'text/' + (asset.type || 'css');
-            ele.rel  = 'stylesheet';
-            ele.href = asset.url;
-        }
-        else {
-            ele      = doc.createElement('script');
-            ele.type = 'text/' + (asset.type || 'javascript');
-            ele.src  = asset.url;
-        }
-
-        ele.onload  = ele.onreadystatechange = process;
-        ele.onerror = error;
-
-        /* Good read, but doesn't give much hope !
-         * http://blog.getify.com/on-script-loaders/
-         * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
-         * https://hacks.mozilla.org/2009/06/defer/
-         */
-
-        // ASYNC: load in parellel and execute as soon as possible
-        ele.async = false;
-        // DEFER: load in parallel but maintain execution order
-        ele.defer = false;
-
+        
         function error(event) {
             event = event || win.event;
-            
+
             // need some more detailed error handling here
 
             // release event listeners
             ele.onload = ele.onreadystatechange = ele.onerror = null;
-                        
+
             // do callback
             callback();
         }
-
+        
         function process(event) {
             event = event || win.event;
 
@@ -489,7 +462,7 @@
 
 
             // !doc.documentMode is for IE6/7, IE8+ have documentMode
-            if (event.type === 'load' || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
+            if (event.type === "load" || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
                 // release event listeners               
                 ele.onload = ele.onreadystatechange = ele.onerror = null;
 
@@ -504,8 +477,39 @@
             //}, 3000);
         }
 
+        var ele;
+        if (/\.css[^\.]*$/.test(asset.url)) {
+            ele      = doc.createElement("link");
+            ele.type = "text/" + (asset.type || "css");
+            ele.rel  = "stylesheet";
+            ele.href = asset.url;
+        }
+        else {
+            ele      = doc.createElement("script");
+            ele.type = "text/" + (asset.type || "javascript");
+            ele.src  = asset.url;
+        }
+
+        ele.onload  = ele.onreadystatechange = process;
+        ele.onerror = error;
+
+        /* Good read, but doesn't give much hope !
+         * http://blog.getify.com/on-script-loaders/
+         * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
+         * https://hacks.mozilla.org/2009/06/defer/
+         */
+
+        // ASYNC: load in parellel and execute as soon as possible
+        ele.async = false;
+        // DEFER: load in parallel but maintain execution order
+        ele.defer = false;
+
+
+
+
+
         // use insertBefore to keep IE from throwing Operation Aborted (thx Bryan Forbes!)
-        var head = doc.head || doc.getElementsByTagName('head')[0];
+        var head = doc.head || doc.getElementsByTagName("head")[0];
         // but insert at end of head, because otherwise if it is a stylesheet, it will not ovverride values
         head.insertBefore(ele, head.lastChild);
     }

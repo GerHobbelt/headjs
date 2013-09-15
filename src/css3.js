@@ -27,8 +27,8 @@
         /* CSS modernizer */
          el       = doc.createElement("i"),
          style    = el.style,
-         prefs    = ' -o- -moz- -ms- -webkit- -khtml- '.split(' '),
-         domPrefs = 'Webkit Moz O ms Khtml'.split(' '),
+         prefs    = " -o- -moz- -ms- -webkit- -khtml- ".split(" "),
+         domPrefs = "Webkit Moz O ms Khtml".split(" "),
 
          headVar = win.head_conf && win.head_conf.head || "head",
          api     = win[headVar];
@@ -47,16 +47,16 @@
 
     function testAll(prop) {
         var camel = prop.charAt(0).toUpperCase() + prop.substr(1),
-            props = (prop + ' ' + domPrefs.join(camel + ' ') + camel).split(' ');
+            props = (prop + " " + domPrefs.join(camel + " ") + camel).split(" ");
 
         return !!testProps(props);
     }
 
     var tests = {
         gradient: function() {
-            var s1 = 'background-image:',
-                s2 = 'gradient(linear,left top,right bottom,from(#9f9),to(#fff));',
-                s3 = 'linear-gradient(left top,#eee,#fff);';
+            var s1 = "background-image:",
+                s2 = "gradient(linear,left top,right bottom,from(#9f9),to(#fff));",
+                s3 = "linear-gradient(left top,#eee,#fff);";
 
             style.cssText = (s1 + prefs.join(s2 + s1) + prefs.join(s3 + s1)).slice(0,-s1.length);
             return !!style.backgroundImage;
@@ -72,17 +72,17 @@
         },
 
         textshadow: function() {
-            return style.textShadow === '';
+            return style.textShadow === "";
         },
 
         multiplebgs: function() {
-            style.cssText = 'background:url(https://),url(https://),red url(https://)';
+            style.cssText = "background:url(https://),url(https://),red url(https://)";
 
             // If the UA supports multiple backgrounds, there should be three occurrences
             // of the string "url(" in the return value for elemStyle.background
             var result = (style.background || "").match(/url/g);
 
-            return Object.prototype.toString.call(result) === '[object Array]' && result.length === 3;
+            return Object.prototype.toString.call(result) === "[object Array]" && result.length === 3;
         },
 
         boxshadow: function() {
@@ -109,11 +109,11 @@
             return testAll("transition");
         },
         touch: function () {
-            return 'ontouchstart' in win;
+            return "ontouchstart" in win;
         },
         retina: function () {
             return (win.devicePixelRatio > 1);
-        },        
+        },
 
         /*
             font-face support. Uses browser sniffing but is synchronous.
