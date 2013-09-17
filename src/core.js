@@ -1,5 +1,5 @@
-﻿/*!
- * HeadJS     The only script in your <HEAD>    
+/*!
+ * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
  * License    MIT / http://bit.ly/mit-license
@@ -97,7 +97,7 @@
     var ua     = nav.userAgent.toLowerCase(),
         mobile = /mobile|android|kindle|silk|midp|(windows nt 6\.2.+arm|touch)/.test(ua);
 
-    // useful for enabling/disabling feature (we can consider a desktop navigator to have more cpu/gpu power)        
+    // useful for enabling/disabling feature (we can consider a desktop navigator to have more cpu/gpu power)
     api.feature("mobile" , mobile , true);
     api.feature("desktop", !mobile, true);
 
@@ -310,4 +310,4 @@
     } else {
         win.attachEvent("onresize", onResize);
     }
-})(window);
+}(window));

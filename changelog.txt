@@ -1,23 +1,31 @@
-﻿1.0
- - * Improved CSS Router
+1.0 :: Items marked with (**) are considered "safe" changes and have been silently integrated into /src & /dist in v0.99 on GitHub ..and maybe on CDN
+ - Improved CSS Router (**)
    - https://github.com/headjs/headjs/issues/227
- - * Added "main" HTML5 element to shim
+ - Added "main" HTML5 element to shim (**)
    - https://github.com/headjs/headjs/pull/230
- - * Always add small shortcut to browser & version no matter what browser breakpoints configured
+ - Always add small shortcut to browser & version no matter what browser breakpoints configured (**)
    - Makes it possible to work without any breakpoints at all
- - Load file via data attribute on HeadJS script tag
+ - Load file via data attribute on HeadJS script tag (**)
+   - data-headjs-load="...filetoload.ext"
    - https://github.com/headjs/headjs/pull/213
  - Add options as a property label
    - https://github.com/headjs/headjs/pull/215
  - Allow ASYNC loading
    - https://github.com/headjs/headjs/issues/204
- - Prevent loading empty strings
+ - Prevent loading empty strings (**)
    - https://github.com/headjs/headjs/pull/184
- - * Fixed CSS classes getting bigger on successive resizes under Chrome
+ - Fixed CSS classes getting bigger on successive resizes under Chrome (**)
    - https://github.com/headjs/headjs/issues/226
- - * Cleaned up a bunch of syntaxt to conform to JSHint
+ - Cleaned up a bunch of syntaxt to conform to JSHint (**)
+   - now using a very strict .jshintrc
+ - Added missing .gitattributes (**)
+ - Fixed "Invalid regular Expression (**)
+   - https://github.com/headjs/headjs/issues/255
+- Changed window.frameElement detection (**)
+  - https://github.com/headjs/headjs/pull/257
+- Source map files have been added for all minified JS files (**)
+- ..in progress
 
- - ..in progress
 0.99
  - Load: Fixed regression in IE6, caused by IE10 fix
  - Load: CSS loading seems to work in all browsers.

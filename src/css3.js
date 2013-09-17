@@ -1,5 +1,5 @@
 /*!
- * HeadJS     The only script in your <HEAD>    
+ * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
  * License    MIT / http://bit.ly/mit-license
@@ -160,4 +160,4 @@
     // enable features at once
     api.feature();
 
-})(window);
+}(window));
