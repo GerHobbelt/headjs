@@ -29,203 +29,9 @@
         LOADING    = 3,
         LOADED     = 4;
 
-    // Method 1: simply load and let browser take care of ordering
-    if (isAsync) {
-        api.load = function () {
-            ///<summary>
-            /// INFO: use cases
-            ///    head.load("http://domain.com/file.js","http://domain.com/file.js", callBack)
-            ///    head.load({ label1: "http://domain.com/file.js" }, { label2: "http://domain.com/file.js" }, callBack)
-            ///</summary>
-            var args      = arguments,
-                 callback = args[args.length - 1],
-                 items    = {};
+    //#region PRIVATE functions
 
-            if (!isFunction(callback)) {
-                callback = null;
-            }
-
-            each(args, function (item, i) {
-                if (item !== callback) {
-                    item             = getAsset(item);
-                    items[item.name] = item;
-
-                    load(item, callback && i === args.length - 2 ? function () {
-                        if (allLoaded(items)) {
-                            one(callback);
-                        }
-
-                    } : null);
-                }
-            });
-
-            return api;
-        };
-
-
-    // Method 2: preload with text/cache hack
-    } else {
-        api.load = function () {
-            var args = arguments,
-                rest = [].slice.call(args, 1),
-                next = rest[0];
-
-            // wait for a while. immediate execution causes some browsers to ignore caching
-            if (!isHeadReady) {
-                queue.push(function () {
-                    api.load.apply(null, args);
-                });
-
-                return api;
-            }
-
-            // multiple arguments
-            if (!!next) {
-                /* Preload with text/cache hack (not good!)
-                 * http://blog.getify.com/on-script-loaders/
-                 * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
-                 * If caching is not configured correctly on the server, then items could load twice !
-                 *************************************************************************************/
-                each(rest, function (item) {
-                    if (!isFunction(item)) {
-                        preLoad(getAsset(item));
-                    }
-                });
-
-                // execute
-                load(getAsset(args[0]), isFunction(next) ? next : function () {
-                    api.load.apply(null, rest);
-                });
-            }
-            else {
-                // single item
-                load(getAsset(args[0]));
-            }
-
-            return api;
-        };
-    }
-
-    // INFO: for retro compatibility
-    api.js = api.load;
-
-    api.test = function (test, success, failure, callback) {
-        ///<summary>
-        /// INFO: use cases:
-        ///    head.test(condition, null       , "file.NOk" , callback);
-        ///    head.test(condition, "fileOk.js", null       , callback);
-        ///    head.test(condition, "fileOk.js", "file.NOk" , callback);
-        ///    head.test(condition, "fileOk.js", ["file.NOk", "file.NOk"], callback);
-        ///    head.test({
-        ///               test    : condition,
-        ///               success : [{ label1: "file1Ok.js"  }, { label2: "file2Ok.js" }],
-        ///               failure : [{ label1: "file1NOk.js" }, { label2: "file2NOk.js" }],
-        ///               callback: callback
-        ///    );
-        ///    head.test({
-        ///               test    : condition,
-        ///               success : ["file1Ok.js" , "file2Ok.js"],
-        ///               failure : ["file1NOk.js", "file2NOk.js"],
-        ///               callback: callback
-        ///    );
-        ///</summary>
-        var obj = (typeof test === 'object') ? test : {
-            test: test,
-            success: !!success ? isArray(success) ? success : [success] : false,
-            failure: !!failure ? isArray(failure) ? failure : [failure] : false,
-            callback: callback || noop
-        };
-
-        // Test Passed ?
-        var passed = !!obj.test;
-
-        // Do we have a success case
-        if (passed && !!obj.success) {
-            obj.success.push(obj.callback);
-            api.load.apply(null, obj.success);
-        }
-            // Do we have a fail case
-        else if (!passed && !!obj.failure) {
-            obj.failure.push(obj.callback);
-            api.load.apply(null, obj.failure);
-        }
-        else {
-            callback();
-        }
-
-        return api;
-    };
-
-    api.ready = function (key, callback) {
-        ///<summary>
-        /// INFO: use cases:
-        ///    head.ready(callBack)
-        ///    head.ready(document , callBack)
-        ///    head.ready("file.js", callBack);
-        ///    head.ready("label"  , callBack);
-        ///</summary>
-
-        // DOM ready check: head.ready(document, function() { });
-        if (key === doc) {
-            if (isDomReady) {
-                one(callback);
-            }
-            else {
-                domWaiters.push(callback);
-            }
-
-            return api;
-        }
-
-        // shift arguments
-        if (isFunction(key)) {
-            callback = key;
-            key      = "ALL";
-        }
-
-        // make sure arguments are sane
-        if (typeof key !== 'string' || !isFunction(callback)) {
-            return api;
-        }
-
-        // This can also be called when we trigger events based on filenames & labels
-        var asset = assets[key];
-
-        // item already loaded --> execute and return
-        if (asset && asset.state === LOADED || key === 'ALL' && allLoaded() && isDomReady) {
-            one(callback);
-            return api;
-        }
-
-        var arr = handlers[key];
-        if (!arr) {
-            arr = handlers[key] = [callback];
-        }
-        else {
-            arr.push(callback);
-        }
-
-        return api;
-    };
-
-
-    // perform this when DOM is ready
-    api.ready(doc, function () {
-
-        if (allLoaded()) {
-            each(handlers.ALL, function (callback) {
-                one(callback);
-            });
-        }
-
-        if (api.feature) {
-            api.feature("domloaded", true);
-        }
-    });
-
-
-    /* private functions
-    *********************/
+    //#region Helper functions
     function noop() {
         // does nothing
     }
@@ -236,7 +42,7 @@
         }                                                                                                           //REMOVE-ON-REQUIRE-BUILD
                                                                                                                     //REMOVE-ON-REQUIRE-BUILD
         // arguments special type                                                                                   //REMOVE-ON-REQUIRE-BUILD
-        if (typeof arr === 'object') {                                                                              //REMOVE-ON-REQUIRE-BUILD
+        if (typeof arr === "object") {                                                                              //REMOVE-ON-REQUIRE-BUILD
             arr = [].slice.call(arr);                                                                               //REMOVE-ON-REQUIRE-BUILD
         }                                                                                                           //REMOVE-ON-REQUIRE-BUILD
                                                                                                                     //REMOVE-ON-REQUIRE-BUILD
@@ -283,6 +89,54 @@
         callback();
         callback._done = 1;
     }
+    //#endregion
+    
+    function conditional(test, success, failure, callback) {
+        ///<summary>
+        /// INFO: use cases:
+        ///    head.test(condition, null       , "file.NOk" , callback);
+        ///    head.test(condition, "fileOk.js", null       , callback);
+        ///    head.test(condition, "fileOk.js", "file.NOk" , callback);
+        ///    head.test(condition, "fileOk.js", ["file.NOk", "file.NOk"], callback);
+        ///    head.test({
+        ///               test    : condition,
+        ///               success : [{ label1: "file1Ok.js"  }, { label2: "file2Ok.js" }],
+        ///               failure : [{ label1: "file1NOk.js" }, { label2: "file2NOk.js" }],
+        ///               callback: callback
+        ///    );
+        ///    head.test({
+        ///               test    : condition,
+        ///               success : ["file1Ok.js" , "file2Ok.js"],
+        ///               failure : ["file1NOk.js", "file2NOk.js"],
+        ///               callback: callback
+        ///    );
+        ///</summary>
+        var obj = (typeof test === "object") ? test : {
+            test: test,
+            success: !!success ? isArray(success) ? success : [success] : false,
+            failure: !!failure ? isArray(failure) ? failure : [failure] : false,
+            callback: callback || noop
+        };
+
+        // Test Passed ?
+        var passed = !!obj.test;
+
+        // Do we have a success case
+        if (passed && !!obj.success) {
+            obj.success.push(obj.callback);
+            api.load.apply(null, obj.success);
+        }
+            // Do we have a fail case
+        else if (!passed && !!obj.failure) {
+            obj.failure.push(obj.callback);
+            api.load.apply(null, obj.failure);
+        }
+        else {
+            callback();
+        }
+
+        return api;
+    }
 
     function getAsset(item) {
         ///<summary>
@@ -295,7 +149,7 @@
         ///</summary>
         var asset = {};
 
-        if (typeof item === 'object') {
+        if (typeof item === "object") {
             for (var label in item) {
                 if (!!item[label]) {
                     asset = {
@@ -334,7 +188,6 @@
         return true;
     }
 
-
     function onPreload(asset) {
         asset.state = PRELOADED;
 
@@ -349,10 +202,89 @@
             asset.state     = PRELOADING;
             asset.onpreload = [];
 
-            loadAsset({ url: asset.url, type: 'cache' }, function () {
+            loadAsset({ url: asset.url, type: "cache" }, function () {
                 onPreload(asset);
             });
         }
+    }
+
+    function apiLoadHack() {
+        /// <summary>preload with text/cache hack
+        ///
+        /// head.load("http://domain.com/file.js","http://domain.com/file.js", callBack)
+        /// head.load({ label1: "http://domain.com/file.js" }, { label2: "http://domain.com/file.js" }, callBack)
+        /// </summary>
+
+        var args = arguments,
+            rest = [].slice.call(args, 1),
+            next = rest[0];
+
+        // wait for a while. immediate execution causes some browsers to ignore caching
+        if (!isHeadReady) {
+            queue.push(function () {
+                api.load.apply(null, args);
+            });
+
+            return api;
+        }
+
+        // multiple arguments
+        if (!!next) {
+            /* Preload with text/cache hack (not good!)
+             * http://blog.getify.com/on-script-loaders/
+             * http://www.nczonline.net/blog/2010/12/21/thoughts-on-script-loaders/
+             * If caching is not configured correctly on the server, then items could load twice !
+             *************************************************************************************/
+            each(rest, function (item) {
+                // item is not a callback or empty string
+                if (!isFunction(item) && !!item) {
+                    preLoad(getAsset(item));
+                }
+            });
+
+            // execute
+            load(getAsset(args[0]), isFunction(next) ? next : function () {
+                api.load.apply(null, rest);
+            });
+        }
+        else {
+            // single item
+            load(getAsset(args[0]));
+        }
+
+        return api;
+    }
+
+    function apiLoadAsync() {
+        ///<summary>
+        /// simply load and let browser take care of ordering
+        ///
+        ///    head.load("http://domain.com/file.js","http://domain.com/file.js", callBack)
+        ///    head.load({ label1: "http://domain.com/file.js" }, { label2: "http://domain.com/file.js" }, callBack)
+        ///</summary>
+        var args = arguments,
+             callback = args[args.length - 1],
+             items = {};
+
+        if (!isFunction(callback)) {
+            callback = null;
+        }
+
+        each(args, function (item, i) {
+            if (item !== callback) {
+                item = getAsset(item);
+                items[item.name] = item;
+
+                load(item, callback && i === args.length - 2 ? function () {
+                    if (allLoaded(items)) {
+                        one(callback);
+                    }
+
+                } : null);
+            }
+        });
+
+        return api;
     }
 
     function load(asset, callback) {
@@ -402,22 +334,22 @@
     ******************************************************/
     function loadAsset(asset, callback) {
         callback = callback || noop;
-
+                
         function error(event) {
             event = event || win.event;
-
-            // need some more detailed error handling here
 
             // release event listeners
             ele.onload = ele.onreadystatechange = ele.onerror = null;
 
             // do callback
             callback();
+            
+            // need some more detailed error handling here
         }
-
+        
         function process(event) {
             event = event || win.event;
-
+            
             // IE 7/8 (2 events on 1st load)
             // 1) event.type = readystatechange, s.readyState = loading
             // 2) event.type = readystatechange, s.readyState = loaded
@@ -460,12 +392,11 @@
 
             // event.type == 'load' && s.readyState = undefined
 
-
             // !doc.documentMode is for IE6/7, IE8+ have documentMode
-            if (event.type === 'load' || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
+            if (event.type === "load" || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
                 // release event listeners
                 ele.onload = ele.onreadystatechange = ele.onerror = null;
-
+                
                 // do callback
                 callback();
             }
@@ -479,14 +410,14 @@
 
         var ele;
         if (/\.css[^\.]*$/.test(asset.url)) {
-            ele      = doc.createElement('link');
-            ele.type = 'text/' + (asset.type || 'css');
-            ele.rel  = 'stylesheet';
+            ele      = doc.createElement("link");
+            ele.type = "text/" + (asset.type || "css");
+            ele.rel  = "stylesheet";
             ele.href = asset.url;
         }
         else {
-            ele      = doc.createElement('script');
-            ele.type = 'text/' + (asset.type || 'javascript');
+            ele      = doc.createElement("script");
+            ele.type = "text/" + (asset.type || "javascript");
             ele.src  = asset.url;
         }
 
@@ -505,9 +436,76 @@
         ele.defer = false;
 
         // use insertBefore to keep IE from throwing Operation Aborted (thx Bryan Forbes!)
-        var head = doc.head || doc.getElementsByTagName('head')[0];
-        // but insert at end of head, because otherwise if it is a stylesheet, it will not ovverride values
+        var head = doc.head || doc.getElementsByTagName("head")[0];
+        // but insert at end of head, because otherwise if it is a stylesheet, it will not override values
         head.insertBefore(ele, head.lastChild);
+    }
+
+    /* Parts inspired from: https://github.com/jrburke/requirejs
+    ************************************************************/
+    function init() {
+        var items =  doc.getElementsByTagName("script");
+        
+        //Look for a script with a data-head-init attribute
+        for (var i = 0, l = items.length; i < l; i++) {
+            var dataMain = items[i].getAttribute("data-headjs-load");
+            if (!!dataMain) {
+                api.load(dataMain);
+                return;
+            }
+        }
+    }
+    
+    function ready(key, callback) {
+        ///<summary>
+        /// INFO: use cases:
+        ///    head.ready(callBack)
+        ///    head.ready(document , callBack)
+        ///    head.ready("file.js", callBack);
+        ///    head.ready("label"  , callBack);
+        ///</summary>
+
+        // DOM ready check: head.ready(document, function() { });
+        if (key === doc) {
+            if (isDomReady) {
+                one(callback);
+            }
+            else {
+                domWaiters.push(callback);
+            }
+
+            return api;
+        }
+
+        // shift arguments
+        if (isFunction(key)) {
+            callback = key;
+            key      = "ALL";
+        }
+
+        // make sure arguments are sane
+        if (typeof key !== "string" || !isFunction(callback)) {
+            return api;
+        }
+
+        // This can also be called when we trigger events based on filenames & labels
+        var asset = assets[key];
+
+        // item already loaded --> execute and return
+        if (asset && asset.state === LOADED || key === "ALL" && allLoaded() && isDomReady) {
+            one(callback);
+            return api;
+        }
+
+        var arr = handlers[key];
+        if (!arr) {
+            arr = handlers[key] = [callback];
+        }
+        else {
+            arr.push(callback);
+        }
+
+        return api;
     }
 
     /* Mix of stuff from jQuery & IEContentLoaded
@@ -524,6 +522,8 @@
 
         if (!isDomReady) {
             isDomReady = true;
+            
+            init();
             each(domWaiters, function (fn) {
                 one(fn);
             });
@@ -574,7 +574,7 @@
         var top = false;
 
         try {
-            top = win.frameElement == null && doc.documentElement;
+            top = !win.frameElement && doc.documentElement;
         } catch (e) { }
 
         if (top && top.doScroll) {
@@ -594,9 +594,32 @@
                     // and execute any waiting functions
                     domReady();
                 }
-            })();
+            }());
         }
     }
+    //#endregion
+
+    //#region Public Exports
+    // INFO: determine which method to use for loading
+    api.load  = api.js = isAsync ? apiLoadAsync : apiLoadHack;
+    api.test  = conditional;
+    api.ready = ready;
+    //#endregion
+
+    //#region INIT
+    // perform this when DOM is ready
+    api.ready(doc, function () {
+
+        if (allLoaded()) {
+            each(handlers.ALL, function (callback) {
+                one(callback);
+            });
+        }
+
+        if (api.feature) {
+            api.feature("domloaded", true);
+        }
+    });
 
     /*
         We wait for 300 ms before asset loading starts. for some reason this is needed
@@ -611,5 +634,6 @@
         });
 
     }, 300);
-
-})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+    //#endregion
+	
+}(window));                                                                                                                 //REMOVE-ON-REQUIRE-BUILD

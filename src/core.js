@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * HeadJS     The only script in your <HEAD>
  * Author     Tero Piirainen  (tipiirai)
  * Maintainer Robert Hoffmann (itechnology)
@@ -22,9 +22,9 @@
             screens   : [240, 320, 480, 640, 768, 800, 1024, 1280, 1440, 1680, 1920],
             screensCss: { "gt": true, "gte": false, "lt": true, "lte": false, "eq": false },
             browsers  : [
-                          { ie     : { min: 6, max: 10 } }
-                       //,{ chrome : { min: 8, max: 26 } }
-                       //,{ ff     : { min: 3, max: 21 } }
+                          { ie     : { min: 6, max: 11 } }
+                       //,{ chrome : { min: 8, max: 29 } }
+                       //,{ ff     : { min: 3, max: 24 } }
                        //,{ ios    : { min: 3, max:  6 } }
                        //,{ android: { min: 2, max:  4 } }
                        //,{ webkit : { min: 9, max: 12 } }
@@ -50,7 +50,7 @@
 
     function removeClass(name) {
         var re = new RegExp(" \\b" + name + "\\b");
-        html.className = html.className.replace(re, '');
+        html.className = html.className.replace(re, "");
     }
 
     function each(arr, fn) {
@@ -78,21 +78,21 @@
 
         // internal: apply all classes
         if (!key) {
-            html.className += ' ' + klass.join(' ');
+            html.className += " " + klass.join(" ");
             klass = [];
             return api;
         }
 
-        if (Object.prototype.toString.call(enabled) === '[object Function]') {
+        if (Object.prototype.toString.call(enabled) === "[object Function]") {
             enabled = enabled.call();
         }
 
-        pushClass((enabled ? '' : 'no-') + key);
+        pushClass((enabled ? "" : "no-") + key);
         api[key] = !!enabled;
 
         // apply class to HTML element
         if (!queue) {
-            removeClass('no-' + key);
+            removeClass("no-" + key);
             removeClass(key);
             api.feature();
         }
@@ -124,23 +124,23 @@
         version = parseFloat(ua[2]);
 
     switch (browser) {
-        case 'msie':
-            browser = 'ie';
+        case "msie":
+            browser = "ie";
             version = doc.documentMode || version;
             break;
 
-        case 'firefox':
-            browser = 'ff';
+        case "firefox":
+            browser = "ff";
             break;
 
-        case 'ipod':
-        case 'ipad':
-        case 'iphone':
-            browser = 'ios';
+        case "ipod":
+        case "ipad":
+        case "iphone":
+            browser = "ios";
             break;
 
-        case 'webkit':
-            browser = 'safari';
+        case "webkit":
+            browser = "safari";
             break;
     }
 
@@ -161,35 +161,42 @@
 
                 for (var v = min; v <= max; v++) {
                     if (version > v) {
-                        if (conf.browserCss.gt)
+                        if (conf.browserCss.gt) {
                             pushClass("gt-" + key + v);
+                        }
 
-                        if (conf.browserCss.gte)
+                        if (conf.browserCss.gte) {
                             pushClass("gte-" + key + v);
+                        }
                     }
 
                     else if (version < v) {
-                        if (conf.browserCss.lt)
+                        if (conf.browserCss.lt) {
                             pushClass("lt-" + key + v);
+                        }
 
-                        if (conf.browserCss.lte)
+                        if (conf.browserCss.lte) {
                             pushClass("lte-" + key + v);
+                        }
                     }
 
                     else if (version === v) {
-                        if (conf.browserCss.lte)
+                        if (conf.browserCss.lte) {
                             pushClass("lte-" + key + v);
+                        }
 
-                        if (conf.browserCss.eq)
+                        if (conf.browserCss.eq) {
                             pushClass("eq-" + key + v);
+                        }
 
-                        if (conf.browserCss.gte)
+                        if (conf.browserCss.gte) {
                             pushClass("gte-" + key + v);
+                        }
                     }
                 }
             }
             else {
-                pushClass('no-' + key);
+                pushClass("no-" + key);
             }
         }
     }
@@ -251,30 +258,37 @@
 
         each(conf.screens, function (width) {
             if (iw > width) {
-                if (conf.screensCss.gt)
+                if (conf.screensCss.gt) {
                     pushClass("gt-" + width);
+                }
 
-                if (conf.screensCss.gte)
+                if (conf.screensCss.gte) {
                     pushClass("gte-" + width);
+                }
             }
 
             else if (iw < width) {
-                if (conf.screensCss.lt)
+                if (conf.screensCss.lt) {
                     pushClass("lt-" + width);
+                }
 
-                if (conf.screensCss.lte)
+                if (conf.screensCss.lte) {
                     pushClass("lte-" + width);
+                }
             }
 
             else if (iw === width) {
-                if (conf.screensCss.lte)
+                if (conf.screensCss.lte) {
                     pushClass("lte-" + width);
+                }
 
-                if (conf.screensCss.eq)
+                if (conf.screensCss.eq) {
                     pushClass("e-q" + width);
+                }
 
-                if (conf.screensCss.gte)
+                if (conf.screensCss.gte) {
                     pushClass("gte-" + width);
+                }
             }
         });
 
@@ -296,7 +310,7 @@
     var resizeId = 0;
     function onResize() {
         win.clearTimeout(resizeId);
-        resizeId = win.setTimeout(screenSize, 100);
+        resizeId = win.setTimeout(screenSize, 50);
     }
 
     // Manually attach, as to not overwrite existing handler
@@ -306,4 +320,4 @@
     } else {
         win.attachEvent("onresize", onResize);
     }
-})(window);                                                                                                                 //REMOVE-ON-REQUIRE-BUILD
+}(window));                                                                                                                 //REMOVE-ON-REQUIRE-BUILD
