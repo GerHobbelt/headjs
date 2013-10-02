@@ -31,7 +31,7 @@
         prefs    = " -o- -moz- -ms- -webkit- -khtml- ".split(" "),
         domPrefs = "Webkit Moz O ms Khtml".split(" "),
 
-    var headVar = win.head_conf && win.head_conf.head || "head",                                                            //REMOVE-ON-REQUIRE-BUILD
+        headVar = win.head_conf && win.head_conf.head || "head",                                                            //REMOVE-ON-REQUIRE-BUILD
         api     = win[headVar];                                                                                             //REMOVE-ON-REQUIRE-BUILD
 
      // Thanks Paul Irish!

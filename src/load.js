@@ -418,7 +418,7 @@
                 var img = document.createElement("img");
                 img.onerror = function() {
                     process({"type":"load"});
-                }
+                };
                 img.src = asset.url;
             }
         }
