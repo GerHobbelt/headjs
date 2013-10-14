@@ -7,7 +7,7 @@
  * Version 0.99
  * http://headjs.com
  */
-; (function (win, undefined) {
+(function (win, undefined) {
     "use strict";
 
     var doc = win.document,
@@ -184,7 +184,7 @@
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -262,9 +262,9 @@
         ///    head.load("http://domain.com/file.js","http://domain.com/file.js", callBack)
         ///    head.load({ label1: "http://domain.com/file.js" }, { label2: "http://domain.com/file.js" }, callBack)
         ///</summary>
-        var args = arguments,
+        var args      = arguments,
              callback = args[args.length - 1],
-             items = {};
+             items    = {};
 
         if (!isFunction(callback)) {
             callback = null;
@@ -272,14 +272,13 @@
 
         each(args, function (item, i) {
             if (item !== callback) {
-                item = getAsset(item);
+                item             = getAsset(item);
                 items[item.name] = item;
-
+                
                 load(item, callback && i === args.length - 2 ? function () {
                     if (allLoaded(items)) {
                         one(callback);
                     }
-
                 } : null);
             }
         });
@@ -313,8 +312,9 @@
         
         loadAsset(asset, function () {
             asset.state = LOADED;
-            callback();
 
+            callback();
+            
             // handlers for this asset
             each(handlers[asset.name], function (fn) {
                 one(fn);
@@ -391,7 +391,7 @@
             // 1) event.type = load, s.readyState = undefined
 
             // event.type == 'load' && s.readyState = undefined
-
+            
             // !doc.documentMode is for IE6/7, IE8+ have documentMode
             if (event.type === "load" || (/loaded|complete/.test(ele.readyState) && (!doc.documentMode || doc.documentMode < 9))) {
                 // release event listeners
@@ -632,7 +632,6 @@
         each(queue, function (fn) {
             fn();
         });
-
     }, 300);
     //#endregion
 }(window));
