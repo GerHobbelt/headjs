@@ -7,7 +7,7 @@
  * Version 0.99
  * http://headjs.com
  */
-;(function(win, undefined) {                                                                                                //REMOVE-ON-REQUIRE-BUILD
+(function (win, undefined) {                                                                                                //REMOVE-ON-REQUIRE-BUILD
     "use strict";                                                                                                           //REMOVE-ON-REQUIRE-BUILD
 
     var doc = win.document;                                                                                                 //REMOVE-ON-REQUIRE-BUILD
@@ -29,12 +29,13 @@
     var el       = doc.createElement("i"),
         style    = el.style,
         prefs    = " -o- -moz- -ms- -webkit- -khtml- ".split(" "),
-        domPrefs = "Webkit Moz O ms Khtml".split(" "),
+        domPrefs = "Webkit Moz O ms Khtml".split(" ");
 
-        headVar = win.head_conf && win.head_conf.head || "head",                                                            //REMOVE-ON-REQUIRE-BUILD
+	/* PUBLIC API */                                                                                                        //REMOVE-ON-REQUIRE-BUILD
+    var headVar = win.head_conf && win.head_conf.head || "head",                                                            //REMOVE-ON-REQUIRE-BUILD
         api     = win[headVar];                                                                                             //REMOVE-ON-REQUIRE-BUILD
 
-     // Thanks Paul Irish!
+    // Thanks Paul Irish!
     function testProps(props) {
         for (var i in props) {
             if (style[props[i]] !== undefined) {
@@ -54,29 +55,29 @@
     }
 
     var tests = {
-        gradient: function() {
+        gradient: function () {
             var s1 = "background-image:",
                 s2 = "gradient(linear,left top,right bottom,from(#9f9),to(#fff));",
                 s3 = "linear-gradient(left top,#eee,#fff);";
 
-            style.cssText = (s1 + prefs.join(s2 + s1) + prefs.join(s3 + s1)).slice(0,-s1.length);
+            style.cssText = (s1 + prefs.join(s2 + s1) + prefs.join(s3 + s1)).slice(0, -s1.length);
             return !!style.backgroundImage;
         },
 
-        rgba: function() {
+        rgba: function () {
             style.cssText = "background-color:rgba(0,0,0,0.5)";
             return !!style.backgroundColor;
         },
 
-        opacity: function() {
+        opacity: function () {
             return el.style.opacity === "";
         },
 
-        textshadow: function() {
+        textshadow: function () {
             return style.textShadow === "";
         },
 
-        multiplebgs: function() {
+        multiplebgs: function () {
             style.cssText = "background:url(https://),url(https://),red url(https://)";
 
             // If the UA supports multiple backgrounds, there should be three occurrences
@@ -86,27 +87,27 @@
             return Object.prototype.toString.call(result) === "[object Array]" && result.length === 3;
         },
 
-        boxshadow: function() {
+        boxshadow: function () {
             return testAll("boxShadow");
         },
 
-        borderimage: function() {
+        borderimage: function () {
             return testAll("borderImage");
         },
 
-        borderradius: function() {
+        borderradius: function () {
             return testAll("borderRadius");
         },
 
-        cssreflections: function() {
+        cssreflections: function () {
             return testAll("boxReflect");
         },
 
-        csstransforms: function() {
+        csstransforms: function () {
             return testAll("transform");
         },
 
-        csstransitions: function() {
+        csstransitions: function () {
             return testAll("transition");
         },
         touch: function () {
@@ -120,7 +121,7 @@
             font-face support. Uses browser sniffing but is synchronous.
             http://paulirish.com/2009/font-face-feature-detection/
         */
-        fontface: function() {
+        fontface: function () {
             var browser = api.browser.name, version = api.browser.version;
 
             switch (browser) {
