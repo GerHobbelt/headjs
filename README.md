@@ -25,11 +25,18 @@ Added new **css( )** feature that supports silently loading of 1 or more stylesh
 	    	}
 	    )
 		.js(
-			{ jquery     :	"js/jquery/jquery.min.js", 	size : "93876"		},
-			{ uuid       :	"js/uuid.js", 				size : "7362"		},
-			{ underscore :  "js/underscore-min.js", 	size : "12140"		},
-			{ namespace  :	"js/namespace.min.js", 		size : "392"	 	}
-		)
+			{ jquery     : "/js/jquery/jquery.min.js", 	                   size : "93876"  },
+			{ uuid       : "/js/uuid.js", 				           size : "7362"   },
+			{ underscore : "/js/underscore-min.js", 	                   size : "12140"  },
+			{ namespace  : "/js/namespace.min.js",                             size : "392"	   },
+			{ require    : "/js/vendor/requirejs/require.js",                  size: "80196"   },
+
+      			{ angular    : "/js/vendor/angular/angular.js",                    size: "551057"  },
+      			{ ngRoute    : "/js/vendor/angular-route/angular-route.js",        size: "30052"   },
+      			{ ngSanitize : "/js/vendor/angular-sanitize/angular-sanitize.js",  size: "19990"   },	
+      			
+      			{ myApp      : "/js/myApp_min.js",                                 size: "821345"  }
+	    )
 		.notify( function (scriptName,scriptSize, loaded, total) {
 			
 			/**
