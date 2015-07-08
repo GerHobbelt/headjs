@@ -116,7 +116,7 @@
     api.css = function ( paths, fn ) {
         var scope = null;
                 
-                function loadStyleSheet( path ) {
+                function loadStyleSheet( path, index ) {
                     var interval, timeout,
                         style,    head;
                     
@@ -132,8 +132,11 @@
 
                                     interval = timeout = undefined;
 
-                                    // fire the callback with success == true
-                                    fn && fn.call( scope || window, true, style );           
+                                    if(index == paths.length-1) {
+                                        // fire the callback with success == true
+                                        fn && fn.call( scope || window, true, style );
+                                    }
+
                                  }
                               } 
                               catch( e ) { } 
@@ -170,8 +173,8 @@
         
 
         // For each CSS entry, load it and notify via `fn` callback
-        each(paths, function(url){
-            loadStyleSheet( url );
+        each(paths, function(url, index){
+            loadStyleSheet( url, index );
         });
 
         return api;
