@@ -13,7 +13,8 @@
     "**",
     "!/dist/1.0.0/*.js",
     "!/dist/1.0.0/*.map",
-    "!/dist/1.0.0/*.txt"
+    "!/dist/1.0.0/*.txt",
+    "!module.json"
   ],
   "directory": "public/scripts",
   "repository": {
