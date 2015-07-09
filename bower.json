@@ -1,5 +1,5 @@
 {
-  "name": "headjs",
+  "name": "webmodules-headjs",
   "description": "HeadJS: Responsive Design, Feature Detections & Asset Loading. The only script in your <HEAD>",
   "version": "1.0.3",
   "license" : "MIT",
