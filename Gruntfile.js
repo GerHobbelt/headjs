@@ -1,5 +1,6 @@
 /* global module:false */
 module.exports = function(grunt) {
+  "use strict";
 
   // https://saucelabs.com/docs/platforms
   var browsers = [
@@ -88,7 +89,7 @@ module.exports = function(grunt) {
             options: {
                 urls         : ["http://127.0.0.1:9999/test/unit/1.0.0/index.html"],
                 tunnelTimeout: 10,
-                build        : process.env.TRAVIS_JOB_ID,
+                build        : process.env.TRAVIS_JOB_ID,                                   // jshint ignore:line
                 concurrency  : 3,
                 browsers     : browsers,
                 testname     : "qunit tests",
@@ -214,16 +215,16 @@ module.exports = function(grunt) {
 
   // Loading dependencies
   for (var key in grunt.config("pkg").devDependencies) {
-    if (key !== "grunt" && key.indexOf("grunt") === 0) {
+    if (key !== "grunt" && key !== "grunt-cli" && key.indexOf("grunt") === 0) {
       grunt.loadNpmTasks(key);
     }
   }
 
-  // Default task
-  grunt.registerTask("default", ["jshint", "concat", "uglify", "qunit"]);
-
   // A convenient task alias.
   grunt.registerTask('test', 'qunit');
+
+  // Default task
+  grunt.registerTask("default", ["jshint", "concat", "uglify", "test"]);
 
   // register sauce tasks
   grunt.registerTask("saucedev" , ["connect", "watch"]);
