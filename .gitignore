@@ -9,6 +9,8 @@
 _site*/
 .idea*/
 *.bundle
+sauce_connect.*
+node_modules/
 *.sln
 *.suo
 _ReSharper*/
@@ -19,3 +21,4 @@ dist/nuget/HeadJS.0.99.nupkg
 test/unit/0.96*/
 test/unit/0.97a*/
 test/debug.html
+

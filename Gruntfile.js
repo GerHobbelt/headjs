@@ -1,9 +1,103 @@
 /* global module:false */
 module.exports = function(grunt) {
 
+  // https://saucelabs.com/docs/platforms
+  var browsers = [
+                    // sauce says ff25 is availiable, but times out systematically...
+                    {
+                        browserName: "firefox",
+                        platform   : "Windows 8",
+                        version    : "22"
+                    },
+                    {
+                        browserName         : "iphone",
+                        platform            : "OS X 10.8",
+                        version             : "6.1",
+                        "device-orientation": "portrait"
+                    },
+                    {
+                        browserName         : "ipad",
+                        platform            : "OS X 10.8",
+                        version             : "6.1",
+                        "device-orientation": "portrait"
+                    },
+                    {
+                        browserName         : "android",
+                        platform            : "Linux",
+                        version             : "4.0",
+                        "device-orientation": "portrait"
+                    },
+                    {
+                        browserName: "safari",
+                        platform   : "OS X 10.8",
+                        version    : "6"
+                    },
+                    {
+                        browserName: "safari",
+                        platform   : "OS X 10.6",
+                        version    : "5"
+                    },
+                    {
+                        browserName: "chrome",
+                        platform   : "Windows 7",
+                        version    : "31"
+                    },
+                    {
+                        browserName: "internet explorer",
+                        platform   : "Windows 8.1",
+                        version    : "11"
+                    },
+                    {
+                        browserName: "internet explorer",
+                        platform   : "Windows 8",
+                        version    : "10"
+                    },                    
+                    {
+                        browserName: "internet explorer",
+                        platform   : "Windows 7",
+                        version    : "9"
+                    },
+                    {
+                        browserName: "internet explorer",
+                        platform   : "Windows XP",
+                        version    : "8"
+                    },
+                    {
+                        browserName: "internet explorer",
+                        platform   : "Windows XP",
+                        version    : "7"
+                    }
+                ];
+  //#endregion
+
   // Project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+    //#region Saucelabs
+    connect: {
+        server: {
+            options: {
+                base: "",
+                port: 9999
+            }
+        }
+    },
+    "saucelabs-qunit": {
+        all: {
+            options: {
+                urls         : ["http://127.0.0.1:9999/test/unit/1.0.0/index.html"],
+                tunnelTimeout: 10,
+                build        : process.env.TRAVIS_JOB_ID,
+                concurrency  : 3,
+                browsers     : browsers,
+                testname     : "qunit tests",
+                tags         : ["master"]
+            }
+        }
+    },
+    watch: {},
+    //#endregion
 
     jshint: {
         options: {
@@ -112,16 +206,18 @@ module.exports = function(grunt) {
         }
     },
 
+    // task: local unit tests
     qunit: {
       files: ['test/unit/index-travis.html']
     }
   });
 
-  // Dependencies
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  // Loading dependencies
+  for (var key in grunt.config("pkg").devDependencies) {
+    if (key !== "grunt" && key.indexOf("grunt") === 0) {
+      grunt.loadNpmTasks(key);
+    }
+  }
 
   // Default task
   grunt.registerTask("default", ["jshint", "concat", "uglify", "qunit"]);
@@ -129,4 +225,7 @@ module.exports = function(grunt) {
   // A convenient task alias.
   grunt.registerTask('test', 'qunit');
 
+  // register sauce tasks
+  grunt.registerTask("saucedev" , ["connect", "watch"]);
+  grunt.registerTask("saucetest", ["connect", "saucelabs-qunit"]);
 };
