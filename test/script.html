@@ -5,15 +5,15 @@
         <title>Test: SCRIPT SRC in &lt;head&gt;</title>
         <link rel="stylesheet" href="style.css" />
         <script>
+            var start = new Date();
+        </script>
+        <script>
             // calculate difference between zero and window.onload
             window.onload = function () {
                 var stop = new Date();
                 document.getElementById("content").style.display = "block";
-                document.getElementById("ms").innerHTML          = (stop - start);
+                document.getElementById("ms").innerHTML = stop.getTime() - start.getTime();
             };
-        </script>
-        <script>
-            var start = new Date();
         </script>
         <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -27,11 +27,13 @@
                 <a href="script.html">SCRIPT SRC <em>in head</em></a>
                 <a href="script-bottom.html">SCRIPT SRC <em>on bottom</em></a>
                 <a href="headjs.html">head.js <em>on head</em></a>
+                <a href="headjs-ordered.html">head.js <em><strong>ordered</strong> on head</em></a>
+                <a href="headjs-bottom.html">head.js <em>on bottom</em></a>
                 <br />
             </div>
             <div id="content" style="display: none">
                 <h1>SCRIPT SRC before &lt;/head&gt;</h1>
-                <div id="time"><span id="ms"></span> ms</div>
+                <div id="time"><span id="ms"></span>ms</div>
                 <p>
                     Press <strong>CTRL+SHIFT+R</strong> or <strong>CTRL+F5</strong> to reload with an <strong>empty cache</strong> = first impression.
                 </p>
@@ -52,6 +54,7 @@
                 </p>
             </div>
             <div id="footer">
+                <a href="../index.html">&laquo; Back</a>
                 &nbsp; | &nbsp; <a href="https://github.com/headjs/headjs/issues">found a bug?</a>
             </div>
         </div>

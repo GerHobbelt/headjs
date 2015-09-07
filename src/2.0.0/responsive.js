@@ -11,7 +11,7 @@
  * HashChange handling
  * lt/gt handling for browser versions, viewport width, and viewport height
  * Event handling: head.on(), based on MinPubSub
- * Make as many variables as possible availiable in css AND js
+ * Make as many variables as possible available in css AND js
  * Detect phone, tablet, mobile, desktop
  * We could detect phone/tablet by measuring the aspect ratio of the screen resolution (not viewport) and making sure it's .mobile-true
  * Move all features to api.features[]

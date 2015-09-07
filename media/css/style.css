@@ -495,8 +495,9 @@ button:active {
 
 #hero {
     background: #678 url("../img/headjs.gif");
-    height: 190px;
+    /* height: 190px; */
     margin: -10px 0 10px;
+    padding-bottom: 30px;
 }
 
 #hero h1,
@@ -511,8 +512,26 @@ button:active {
     margin: 20px 36px 0 322px;
 }
 
+#hero ul {
+    color: #c8c8c8;
+    font-size: 11px;
+    margin: 20px 36px 0 322px;
+    list-style: none;
+}
+
+#hero li {
+    display: inline;
+    margin-left: 0;
+    margin-right: 1em;
+}
+
+#hero li:before {
+    content: "\2605 ";
+    margin-right: 1em;
+}
+
 #hero a {
-    color: #777;
+    color: #fff;
 }
 
 nav,

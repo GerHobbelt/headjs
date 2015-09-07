@@ -2,12 +2,11 @@
 <html class="no-js">
     <head>
         <meta charset="utf-8"/>
-        <title>Test: SCRIPT via HeadJS</title>
+        <title>Test: SCRIPT via HeadJS at bottom</title>
         <link rel="stylesheet" href="style.css" />
         <script>
             var start = new Date();
         </script>
-        <script src="../dist/head.js"></script>
         <script>
             // calculate difference between zero and window.onload
             window.onload = function () {
@@ -15,13 +14,6 @@
                 document.getElementById("content").style.display = "block";
                 document.getElementById("ms").innerHTML = stop.getTime() - start.getTime();
             };
-        </script>
-        <script>
-            head.js("http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js")
-                .js("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
-                .js("http://ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js")
-                .js("http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js")
-                .js("http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js");
         </script>
     </head>
     <body>
@@ -35,7 +27,7 @@
                 <br />
             </div>
             <div id="content" style="display: none">
-                <h1>SCRIPT SRC via HeadJS</h1>
+                <h1>SCRIPT SRC via HeadJS on bottom</h1>
                 <div id="time"><span id="ms"></span>ms</div>
                 <p>
                     Press <strong>CTRL+SHIFT+R</strong> or <strong>CTRL+F5</strong> to reload with an <strong>empty cache</strong> = first impression.
@@ -61,5 +53,13 @@
                 &nbsp; | &nbsp; <a href="https://github.com/headjs/headjs/issues">found a bug?</a>
             </div>
         </div>
+        <script src="../dist/head.js"></script>
+        <script>
+            head.js("http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js")
+                .js("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
+                .js("http://ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js")
+                .js("http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js")
+                .js("http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js");
+        </script>
     </body>
 </html>

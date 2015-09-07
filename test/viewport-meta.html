@@ -13,15 +13,13 @@
     <div id="result"></div>
     
     <ul>
-        <li>1) Prefered: Inner browser surface/viewport. Excludes toolbars & scrollbars.</li>
+        <li>1) Prefered: Inner browser surface/viewport. Excludes toolbars &amp; scrollbars.</li>
         <li>2) Fallback: Like 1, but not supported everywhere.</li>
         <li>3) Experimental: Just testing accuracy here.</li>
         <li>4) Prefered: Current browser size. Also takes into account a resized browser window.</li>
         <li>5) Fallback: Measures the entire screen resolution.</li>
         <li><a href="http://www.browserscope.org/user/tests/table/agt1YS1wcm9maWxlcnIRCxIEVGVzdBiAgICAiYLaCAw?v=3&layout=simple" target="results">BrowserScope Results</a></li>
     </ul> 
-    
-          
    
     <script>
         // Throttle navigators from triggering too many resize events
@@ -89,7 +87,7 @@
             parent.removeChild(result);
 
             var newResult = document.createElement("div");
-            newResult.id  = "result";
+            newResult.id = "result";
 
             newResult.appendChild(addResult("1) INNER measurements", false));
 
