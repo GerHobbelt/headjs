@@ -9,13 +9,6 @@
   ],
   "homepage " : "http://headjs.com",
   "main"  : ["./dist/1.0.0/head.min.js","./dist/1.0.0/head.min.js.map","./dist/1.0.0/changelog.txt"],
-  "ignore": [
-    "**",
-    "!/dist/1.0.0/*.js",
-    "!/dist/1.0.0/*.map",
-    "!/dist/1.0.0/*.txt",
-    "!module.json"
-  ],
   "directory": "public/scripts",
   "repository": {
     "type": "git", "url": "git://github.com/headjs/headjs.git"
